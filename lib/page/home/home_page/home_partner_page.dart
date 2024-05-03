@@ -80,86 +80,123 @@ class _HomePartnerPageState extends State<HomePartnerPage>
               child: TabBarView(
             controller: _tabController,
             children: [
-              BlocConsumer<HomePageCubit, HomePageState>(
-                bloc: homePageCubit,
-                listener: (context, state) {},
-                builder: (context, state) {
-                  if (state is HomePageLoaded) {
-                    return Container(
-                        padding: const EdgeInsets.only(
-                          left: 16.0,
-                          right: 16,
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              BlocConsumer<HomePageCubit, HomePageState>(
-                                  bloc: homePageCubit,
-                                  builder: (context, state) {
-                                    return const SizedBox();
-                                  },
-                                  listener: (context, state) {}),
-                              for (var item in homePageCubit.listClean)
-                                CleanItem(item: item),
-                              for (int i = 0;
-                                  i < homePageCubit.listTaskBooking.length;
-                                  i++)
-                                TaskBookingItem(
-                                    item: homePageCubit.listTaskBooking[i],
-                                    index: i,
-                                    lenght:
-                                        homePageCubit.listTaskBooking.length)
-                            ],
+              Container(
+                margin: const EdgeInsets.only(top: 12),
+                child: BlocConsumer<HomePageCubit, HomePageState>(
+                  bloc: homePageCubit,
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is HomePageLoaded) {
+                      return Container(
+                          padding: const EdgeInsets.only(
+                            left: 16.0,
+                            right: 16,
                           ),
-                        ));
-                  }
-                  return const SizedBox();
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-                child: Column(
-                  children: [
-                    Container(
-                      width: MediaQuery.sizeOf(context).width,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 2,
-                                offset: Offset(0, 2))
-                          ],
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Thông báo công việc",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          Divider(
-                            color: Colors.grey.shade300,
-                          ),
-                          const Text(
-                            "Hiện không có công việc nào",
-                            style: TextStyle(fontSize: 16),
-                          )
-                        ],
-                      ),
-                    ),
-                    // Expanded(
-                    //     child: ListView.builder(
-                    //         itemCount: 100,
-                    //         shrinkWrap: true,
-                    //         itemBuilder: (context, index) => Text('$index'))),
-                    // const SizedBox(
-                    //   height: 16,
-                    // ),
-                  ],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                BlocConsumer<HomePageCubit, HomePageState>(
+                                    bloc: homePageCubit,
+                                    builder: (context, state) {
+                                      return const SizedBox();
+                                    },
+                                    listener: (context, state) {}),
+                                for (var item in homePageCubit.listClean)
+                                  CleanItem(item: item),
+                                for (int i = 0;
+                                    i < homePageCubit.listTaskBooking.length;
+                                    i++)
+                                  TaskBookingItem(
+                                      item: homePageCubit.listTaskBooking[i],
+                                      index: i,
+                                      lenght:
+                                          homePageCubit.listTaskBooking.length)
+                              ],
+                            ),
+                          ));
+                    }
+                    return const SizedBox();
+                  },
                 ),
-              )
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 12),
+                child: BlocConsumer<HomePageCubit, HomePageState>(
+                  bloc: homePageCubit,
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is HomePageLoaded) {
+                      return Container(
+                          padding: const EdgeInsets.only(
+                            left: 16.0,
+                            right: 16,
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                BlocConsumer<HomePageCubit, HomePageState>(
+                                    bloc: homePageCubit,
+                                    builder: (context, state) {
+                                      return const SizedBox();
+                                    },
+                                    listener: (context, state) {}),
+                                for (var item in homePageCubit.listCleanDone)
+                                  CleanItem(item: item),
+                                for (int i = 0;
+                                    i <
+                                        homePageCubit
+                                            .listTaskBookingDone.length;
+                                    i++)
+                                  TaskBookingItem(
+                                      item:
+                                          homePageCubit.listTaskBookingDone[i],
+                                      index: i,
+                                      lenght:
+                                          homePageCubit.listTaskBooking.length)
+                              ],
+                            ),
+                          ));
+                    }
+                    return const SizedBox();
+                  },
+                ),
+              ),
+              //     Padding(
+              //       padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+              //       child: Column(
+              //         children: [
+              //           Container(
+              //             width: MediaQuery.sizeOf(context).width,
+              //             padding: const EdgeInsets.all(16),
+              //             decoration: BoxDecoration(
+              //                 boxShadow: const [
+              //                   BoxShadow(
+              //                       color: Colors.grey,
+              //                       blurRadius: 2,
+              //                       offset: Offset(0, 2))
+              //                 ],
+              //                 color: Colors.white,
+              //                 borderRadius: BorderRadius.circular(16)),
+              //             child: Column(
+              //               crossAxisAlignment: CrossAxisAlignment.start,
+              //               children: [
+              //                 const Text(
+              //                   "Thông báo công việc",
+              //                   style: TextStyle(fontSize: 16),
+              //                 ),
+              //                 Divider(
+              //                   color: Colors.grey.shade300,
+              //                 ),
+              //                 const Text(
+              //                   "Hiện không có công việc nào",
+              //                   style: TextStyle(fontSize: 16),
+              //                 )
+              //               ],
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     )
             ],
           ))
         ],

@@ -16,8 +16,8 @@ class _CleanItemState extends State<CleanItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.pushNamed(context, AppRouteUser.cleanDetail,
-        //     arguments: widget.item);
+        Navigator.pushNamed(context, AppRouteUser.cleanDetail,
+            arguments: widget.item);
       },
       child: Container(
         margin: const EdgeInsets.only(top: 16, bottom: 0),

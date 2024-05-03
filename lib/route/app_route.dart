@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:partner_app/data/model/clean_task_model.dart';
+import 'package:partner_app/data/model/task_booking_model.dart';
 import 'package:partner_app/page/home/home_partner.dart';
 import 'package:partner_app/page/sign_in/partner_sign_in_page.dart';
 import 'package:partner_app/page/sign_up/partner_sign_up_page.dart';
 import 'package:partner_app/page/splash/splash_page.dart';
+import 'package:partner_app/page/task_detail/clean_detail/clean_detail.dart';
+import 'package:partner_app/page/task_detail/task_booking_detail/task_detail_page.dart';
 
 class RouteGenerate {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -20,6 +24,19 @@ class RouteGenerate {
       case (AppRouteUser.signUpPartner):
         return MaterialPageRoute(
             builder: ((context) => const PartnerSignUpPage()));
+      case (AppRouteUser.cleanDetail):
+        {
+          return MaterialPageRoute(
+              builder: (context) => CleanDetailPage(item: args as CleanModel));
+        }
+      case (AppRouteUser.taskBookingDetail):
+        {
+          TaskBookingModel taskBookingModel = args as TaskBookingModel;
+          return MaterialPageRoute(
+              builder: (context) => TaskBookingDetailPage(
+                    taskBookingModel: taskBookingModel,
+                  ));
+        }
       default:
         return errorRoute();
     }
@@ -51,5 +68,9 @@ class AppRouteUser {
   static const String homePartner = "home_partner";
   static const String signInPartner = "sign_in_partner";
   static const String signUpPartner = "sign_up_partner";
+
+  static const String cleanDetail = "/clean_detail";
+  static const String taskBookingDetail = "/task_booking_detail";
+
   //
 }
