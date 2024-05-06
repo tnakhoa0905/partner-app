@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class FinancePartnerPage extends StatefulWidget {
   const FinancePartnerPage({super.key});
@@ -58,16 +56,19 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: const Icon(
-                        Icons.navigate_before,
-                        color: Colors.white,
-                        size: 30,
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12)),
+                        child: const Icon(
+                          Icons.navigate_before,
+                          color: Colors.white,
+                          size: 30,
+                        ),
                       ),
                     ),
                     const Text(

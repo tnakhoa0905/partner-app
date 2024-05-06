@@ -1,8 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/components/back_ground.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:partner_app/cubit/setting/setting_cubit.dart';
 
 class SettingPartnerPage extends StatefulWidget {
   const SettingPartnerPage({super.key});
@@ -12,7 +14,14 @@ class SettingPartnerPage extends StatefulWidget {
 }
 
 class _SettingPartnerPageState extends State<SettingPartnerPage> {
-  List<int> listCalendar = [];
+  late SettingPageCubit settingPageCubit;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    settingPageCubit = BlocProvider.of<SettingPageCubit>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +35,19 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: const Icon(
-                      Icons.navigate_before,
-                      color: Colors.white,
-                      size: 30,
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: const Icon(
+                        Icons.navigate_before,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   ),
                   const Text(
@@ -54,7 +66,7 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               Expanded(
@@ -124,7 +136,7 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                                   width: 60,
                                   height: 24,
                                   decoration: BoxDecoration(
-                                      color: Color(0xFF4151b1),
+                                      color: const Color(0xFF4151b1),
                                       borderRadius: BorderRadius.circular(16)),
                                 ),
                                 const Text('Thời gian  rãnh')
@@ -145,9 +157,28 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                                 const Text('Thời gian bận ')
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 24,
-                            )
+                            ),
+                            if (settingPageCubit.listCalendar.isEmpty)
+                              SizedBox(
+                                height: 60,
+                                width: MediaQuery.sizeOf(context).width,
+                                child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF4151b1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Đăng ký',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.white),
+                                    )),
+                              ),
                           ],
                         ),
                       )
@@ -166,13 +197,11 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
       {required String date, required List<int> value}) {
     List<int> listDefault = [];
     for (var element in value) {
-      print(element);
-      print(listCalendar.indexOf(element));
-      if (listCalendar.contains(element)) {
+      if (settingPageCubit.listCalendar.contains(element)) {
         listDefault.add(element);
       }
     }
-    print(listDefault);
+
     return IntrinsicHeight(
       child: Row(
         children: [
@@ -215,20 +244,21 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                   textStyle: TextStyle(fontSize: 16)),
               checkBoxButtonValues: (values) {
                 List<int> listCheck = [];
-                listCheck.addAll(listCalendar);
-                if (listCalendar.isEmpty) {
-                  listCalendar.addAll(values);
+                listCheck.addAll(settingPageCubit.listCalendar);
+                if (settingPageCubit.listCalendar.isEmpty) {
+                  settingPageCubit.listCalendar.addAll(values);
                 } else {
                   for (var item in value) {
                     if (!values.contains(item)) {
-                      listCalendar.remove(item);
+                      settingPageCubit.listCalendar.remove(item);
                     }
                   }
                   for (var item in values) {
-                    if (!listCalendar.contains(item)) {
-                      listCalendar.add(item);
+                    if (!settingPageCubit.listCalendar.contains(item)) {
+                      settingPageCubit.listCalendar.add(item);
                     }
                   }
+                  print(settingPageCubit.listCalendar);
                 }
               },
             ),

@@ -85,7 +85,7 @@ class User {
   int? role;
   dynamic expiredAt;
   int? balance;
-  List<dynamic>? freetime;
+  List<int>? freetime;
   String? id;
   String? fullName;
   String? phoneNumber;
@@ -114,7 +114,7 @@ class User {
     int? role,
     dynamic expiredAt,
     int? balance,
-    List<dynamic>? freetime,
+    List<int>? freetime,
     String? id,
     String? fullName,
     String? phoneNumber,
@@ -147,7 +147,7 @@ class User {
         balance: json["balance"],
         freetime: json["freetime"] == null
             ? []
-            : List<dynamic>.from(json["freetime"]!.map((x) => x)),
+            : List<int>.from(json["freetime"]!.map((x) => x)),
         id: json["_id"],
         fullName: json["fullName"],
         phoneNumber: json["phoneNumber"],

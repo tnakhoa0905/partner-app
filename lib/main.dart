@@ -8,6 +8,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:partner_app/constant/constant.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
+import 'package:partner_app/cubit/setting/setting_cubit.dart';
 import 'package:partner_app/cubit/sign_in/sign_in_cubit.dart';
 import 'package:partner_app/cubit/splash/splash_cubit.dart';
 import 'package:partner_app/route/app_route.dart';
@@ -102,6 +103,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<SignInPartnerCubit>(
             create: (context) => SignInPartnerCubit()),
         BlocProvider<HomePageCubit>(create: (context) => HomePageCubit()),
+        BlocProvider<SettingPageCubit>(create: (context) => SettingPageCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

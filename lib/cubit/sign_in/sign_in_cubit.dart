@@ -18,6 +18,7 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
   TextEditingController phoneNumberController = TextEditingController(text: '');
   TextEditingController emailController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
+  UserModel? user;
   init(context) async {
     String? id = await hiveService.getBox("id", HiveService.boxUserModel);
     print(id);
@@ -36,6 +37,7 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
       UserModel? userModel =
           await userRepository.userSignIn(userName.text, passWord.text);
       if (userModel != null) {
+        user = userModel;
         print('done');
         print(userModel.token);
         print(userModel.user!.id);

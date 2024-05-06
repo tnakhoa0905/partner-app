@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:partner_app/data/model/clean_task_model.dart';
 import 'package:partner_app/data/model/task_booking_model.dart';
+import 'package:partner_app/page/finance/finance_partner_page.dart';
 import 'package:partner_app/page/home/home_partner.dart';
+import 'package:partner_app/page/income_history/income_history_partner_page.dart';
+import 'package:partner_app/page/setting/setting_partner_page.dart';
 import 'package:partner_app/page/sign_in/partner_sign_in_page.dart';
 import 'package:partner_app/page/sign_up/partner_sign_up_page.dart';
 import 'package:partner_app/page/splash/splash_page.dart';
+import 'package:partner_app/page/support/support_partner_page.dart';
 import 'package:partner_app/page/task_detail/clean_detail/clean_detail.dart';
 import 'package:partner_app/page/task_detail/task_booking_detail/task_detail_page.dart';
+import 'package:partner_app/page/week_report/week_report_partner_page.dart';
 
 class RouteGenerate {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -37,6 +42,24 @@ class RouteGenerate {
                     taskBookingModel: taskBookingModel,
                   ));
         }
+      case (AppRouteUser.finance):
+        return MaterialPageRoute(
+            builder: ((context) => const FinancePartnerPage()));
+      case (AppRouteUser.incomeHistory):
+        return MaterialPageRoute(
+            builder: ((context) => const IncomeHistoryPartnerPage()));
+      // case (AppRouteUser.service):
+      //   return MaterialPageRoute(
+      //       builder: ((context) => const service()));
+      case (AppRouteUser.setting):
+        return MaterialPageRoute(
+            builder: ((context) => const SettingPartnerPage()));
+      case (AppRouteUser.support):
+        return MaterialPageRoute(
+            builder: ((context) => const SupportPartnerPage()));
+      case (AppRouteUser.weekReport):
+        return MaterialPageRoute(
+            builder: ((context) => const WeekReportPartnerPage()));
       default:
         return errorRoute();
     }
@@ -68,9 +91,14 @@ class AppRouteUser {
   static const String homePartner = "home_partner";
   static const String signInPartner = "sign_in_partner";
   static const String signUpPartner = "sign_up_partner";
-
   static const String cleanDetail = "/clean_detail";
   static const String taskBookingDetail = "/task_booking_detail";
-
   //
+  static const String finance = "/finance_page";
+  static const String incomeHistory = "/income_history";
+  static const String service = "/service";
+
+  static const String setting = "/setting";
+  static const String support = "/support";
+  static const String weekReport = "/week_report";
 }

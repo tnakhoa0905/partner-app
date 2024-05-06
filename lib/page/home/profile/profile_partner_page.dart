@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:partner_app/constant/constant.dart';
+import 'package:partner_app/cubit/setting/setting_cubit.dart';
+import 'package:partner_app/route/app_route.dart';
 
 class ProfilePartnerPage extends StatefulWidget {
   const ProfilePartnerPage({super.key});
@@ -10,6 +12,15 @@ class ProfilePartnerPage extends StatefulWidget {
 }
 
 class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
+  late SettingPageCubit settingPageCubit;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<SettingPageCubit>(context).init(context);
+    settingPageCubit = BlocProvider.of<SettingPageCubit>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,25 +81,30 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                           const SizedBox(
                             height: 16,
                           ),
-                          const Row(
+                          Row(
                             children: [
                               CircleAvatar(
                                 radius: 40,
+                                backgroundImage: NetworkImage(
+                                    "${UrlApiAppUser.host}${settingPageCubit.usermodel!.user!.avatar!}"),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Phạm Minh Trí',
-                                    style: TextStyle(
+                                    settingPageCubit.usermodel!.user!.fullName!,
+                                    style: const TextStyle(
                                         color: Color(0xFFf57171),
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  Text('0966626550')
+                                  Text(
+                                    settingPageCubit
+                                        .usermodel!.user!.phoneNumber!,
+                                  )
                                 ],
                               )
                             ],
@@ -126,7 +142,8 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                 width: 50,
                                 height: 30,
                                 child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.pushNamed(
+                                        context, AppRouteUser.finance),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(0),
                                       backgroundColor: const Color(0xFFf57171),
@@ -165,7 +182,9 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                               BorderRadius.circular(12),
                                           border:
                                               Border.all(color: Colors.grey)),
-                                      child: const Text('0d'))
+                                      child: Text(
+                                        "${AppConstant.oCcy.format(settingPageCubit.usermodel!.user!.balance!)} VND",
+                                      ))
                                 ],
                               )
                             ],
@@ -221,7 +240,8 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                 width: 50,
                                 height: 30,
                                 child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.pushNamed(
+                                        context, AppRouteUser.weekReport),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(0),
                                       backgroundColor: const Color(0xFFf57171),
@@ -289,7 +309,8 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                 width: 50,
                                 height: 30,
                                 child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.pushNamed(
+                                        context, AppRouteUser.incomeHistory),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(0),
                                       backgroundColor: const Color(0xFFf57171),
@@ -343,7 +364,8 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                 width: 50,
                                 height: 30,
                                 child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.pushNamed(
+                                        context, AppRouteUser.setting),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(0),
                                       backgroundColor: const Color(0xFFf57171),
@@ -451,7 +473,8 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                 width: 50,
                                 height: 30,
                                 child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.pushNamed(
+                                        context, AppRouteUser.support),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(0),
                                       backgroundColor: const Color(0xFFf57171),
