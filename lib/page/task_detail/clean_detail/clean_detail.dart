@@ -433,7 +433,9 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
               ),
               ElevatedButton(
                   onPressed: () => homePageCubit.cancelTask(
-                      context: context, taskId: widget.item.id!),
+                      context: context,
+                      taskId: widget.item.id!,
+                      cleanModel: widget.item),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.grey.shade200,
                     overlayColor: Colors.grey,

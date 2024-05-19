@@ -18,4 +18,10 @@ class FirebaseApi {
     );
     print('User granted permission: ${settings.authorizationStatus}');
   }
+
+  Future<String> getToken() async {
+    final fcmToken = await _firebase.getToken();
+    return fcmToken!;
+    // FirebaseMessaging.instance.subscribeToTopic('');
+  }
 }

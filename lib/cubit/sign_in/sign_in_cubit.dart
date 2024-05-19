@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/sign_in/sign_in_state.dart';
+import 'package:partner_app/data/fcm_api.dart';
 import 'package:partner_app/data/hive_service.dart';
 import 'package:partner_app/data/model/user_model.dart';
 import 'package:partner_app/data/repository/user_repo.dart';
@@ -32,23 +33,21 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
       emit(SignInPartnerInitial());
       print(userName.text);
       print(passWord.text);
-      // String? deviceId = await _getId();
-      // print(deviceId);
-      UserModel? userModel =
-          await userRepository.userSignIn(userName.text, passWord.text);
+      final fcmToken = await FirebaseApi().getToken();
+      print(fcmToken);
+
+      UserModel? userModel = await userRepository.userSignIn(
+          userName.text, passWord.text, fcmToken);
       if (userModel != null) {
-        user = userModel;
         print('done');
-        print(userModel.token);
-        print(userModel.user!.id);
-        print(userModel.user!.fullName);
         await hiveService.addBox(
             "token", userModel.token!, HiveService.boxUserModel);
         await hiveService.addBox(
             "id", userModel.user!.id!, HiveService.boxUserModel);
         await hiveService.addBox(
             "fullName", userModel.user!.fullName!, HiveService.boxUserModel);
-
+        userName.clear();
+        passWord.clear();
         emit(SignInPartnerLoaded());
         Navigator.pushNamed(context, AppRouteUser.homePartner);
       } else {
@@ -60,28 +59,26 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
     }
   }
 
-  // signUp(BuildContext context) async {
-  //   UserModel? userModel = await userRepository.userSignUp(
-  //       userName: phoneNumberController.text,
-  //       passWord: passwordController.text,
-  //       email: emailController.text,
-  //       fullName: fullNameController.text);
-  //   if (userModel != null) {
-  //     print('done');
-  //     print(userModel.token);
-  //     print(userModel.user!.id);
-  //     print(userModel.user!.fullName);
-  //     await hiveService.addBox(
-  //         "token", userModel.token!, HiveService.boxUserModel);
-  //     await hiveService.addBox(
-  //         "id", userModel.user!.id!, HiveService.boxUserModel);
-  //     await hiveService.addBox(
-  //         "fullName", userModel.user!.fullName!, HiveService.boxUserModel);
-
-  //     emit(SignInLoaded());
-  //     Navigator.pushNamed(context, AppRouteUser.home);
-  //   }
-  // }
+  signUp(BuildContext context) async {
+    UserModel? userModel = await userRepository.userSignUp(
+        userName: phoneNumberController.text,
+        passWord: passwordController.text,
+        email: emailController.text,
+        fullName: fullNameController.text);
+    if (userModel != null) {
+      print('done');
+      print(userModel.token);
+      print(userModel.user!.id);
+      print(userModel.user!.fullName);
+      phoneNumberController.clear();
+      passwordController.clear();
+      emailController.clear();
+      fullNameController.clear();
+      Navigator.pushNamed(context, AppRouteUser.signInPartner);
+    } else {
+      print("sai roi");
+    }
+  }
 
   // Future<String?> _getId() async {
   //   var deviceInfo = DeviceInfoPlugin();

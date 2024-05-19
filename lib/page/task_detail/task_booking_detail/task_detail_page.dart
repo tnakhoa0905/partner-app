@@ -423,8 +423,12 @@ class _TaskBookingDetailPageState extends State<TaskBookingDetailPage> {
                   height: 24,
                 ),
                 ElevatedButton(
-                    onPressed: () => homePageCubit.completeTask(
-                        context: context, taskId: widget.taskBookingModel.id!),
+                    onPressed: () {
+                      homePageCubit.completeTask(
+                          context: context,
+                          taskId: widget.taskBookingModel.id!,
+                          taskBookingModel: widget.taskBookingModel);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                       overlayColor: Colors.grey,
@@ -445,8 +449,12 @@ class _TaskBookingDetailPageState extends State<TaskBookingDetailPage> {
                   height: 8,
                 ),
                 ElevatedButton(
-                    onPressed: () => homePageCubit.cancelTask(
-                        context: context, taskId: widget.taskBookingModel.id!),
+                    onPressed: () {
+                      // homePageCubit.cancelTask(
+                      //     context: context,
+                      //     taskId: widget.taskBookingModel.id!,
+                      //     taskBookingModel: widget.taskBookingModel);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey.shade200,
                       overlayColor: Colors.grey,

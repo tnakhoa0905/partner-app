@@ -109,7 +109,7 @@ class AppConstant {
 class ThemeApp {
   static ThemeData lightMode = ThemeData(
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-    fontFamily: GoogleFonts.truculenta().fontFamily,
+    fontFamily: GoogleFonts.roboto().fontFamily,
     textTheme: const TextTheme(
       titleLarge: TextStyle(
           color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
@@ -122,10 +122,13 @@ class UrlApiAppUser {
   static const String host = "https://apitasks.pdteam.net/";
   // static const String host = "http://192.168.1.27:3011/";
   static const signIn = "${host}users/login";
-  static const signUp = "${host}users/signup_with_phone";
+  static const signUp = "${host}users/partner_signup";
+  static const getUser = "${host}users/get_user_profile";
   //
   static const getWaitingJob = "${host}users/partner_waiting_task";
   static const getDoneJob = "${host}users/partner_done_task";
   static const completedJob = "${host}users/partner_completed";
   static const cancelJob = "${host}users/partner_cancel_task";
+  static const updateFreeTime = "${host}users/partner_update_freetime";
+  //
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/sign_in/sign_in_cubit.dart';
+import 'package:partner_app/route/app_route.dart';
 
 class PartnerSignInPage extends StatefulWidget {
   const PartnerSignInPage({super.key});
@@ -161,7 +162,10 @@ class _PartnerSignInPage extends State<PartnerSignInPage> {
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, AppRouteUser.signUpPartner);
+                        },
                         child: const Text(
                           'Đăng ký',
                           style: TextStyle(

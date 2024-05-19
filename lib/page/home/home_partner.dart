@@ -20,7 +20,10 @@ class _HomePartnerPageState extends State<HomePartner> {
     const WelfarePartnerPage(),
     const ProfilePartnerPage()
   ];
+
   int indexPage = 0;
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -13,3 +13,7 @@ class SignInPartnerLoaded extends SignInPartnerState {
 class SignInPartnerError extends SignInPartnerState {
   SignInPartnerError();
 }
+
+class SignUpError extends SignInPartnerState {
+  SignUpError();
+}

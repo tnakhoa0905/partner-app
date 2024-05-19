@@ -161,42 +161,6 @@ class _HomePartnerPageState extends State<HomePartnerPage>
                   },
                 ),
               ),
-              //     Padding(
-              //       padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-              //       child: Column(
-              //         children: [
-              //           Container(
-              //             width: MediaQuery.sizeOf(context).width,
-              //             padding: const EdgeInsets.all(16),
-              //             decoration: BoxDecoration(
-              //                 boxShadow: const [
-              //                   BoxShadow(
-              //                       color: Colors.grey,
-              //                       blurRadius: 2,
-              //                       offset: Offset(0, 2))
-              //                 ],
-              //                 color: Colors.white,
-              //                 borderRadius: BorderRadius.circular(16)),
-              //             child: Column(
-              //               crossAxisAlignment: CrossAxisAlignment.start,
-              //               children: [
-              //                 const Text(
-              //                   "Thông báo công việc",
-              //                   style: TextStyle(fontSize: 16),
-              //                 ),
-              //                 Divider(
-              //                   color: Colors.grey.shade300,
-              //                 ),
-              //                 const Text(
-              //                   "Hiện không có công việc nào",
-              //                   style: TextStyle(fontSize: 16),
-              //                 )
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     )
             ],
           ))
         ],

@@ -16,7 +16,6 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
   Future<bool> completeTask(
       String taskerId, String taskId, String token) async {
     try {
-      print('go go');
       var headers = {
         'Content-Type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer $token',
@@ -40,7 +39,6 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
   Future<bool> cancelTask(String taskerId, String taskId, String token) async {
     // TODO: implement cancelTask
     try {
-      print('go go');
       var headers = {
         'Content-Type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer $token',
@@ -71,7 +69,6 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
       final response = await http.post(Uri.parse(UrlApiAppUser.getWaitingJob),
           headers: headers, body: jsonEncode({"taskerId": taskerId}));
       if (response.statusCode == 200) {
-        print(response.body);
         return response.body;
       }
       return null;
@@ -90,7 +87,6 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
       final response = await http.post(Uri.parse(UrlApiAppUser.getDoneJob),
           headers: headers, body: jsonEncode({"taskerId": taskerId}));
       if (response.statusCode == 200) {
-        print(response.body);
         return response.body;
       }
       return null;

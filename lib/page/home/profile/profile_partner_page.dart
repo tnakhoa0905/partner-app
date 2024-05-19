@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/constant/constant.dart';
+import 'package:partner_app/cubit/profile/profile_cubit.dart';
 import 'package:partner_app/cubit/setting/setting_cubit.dart';
 import 'package:partner_app/route/app_route.dart';
 
@@ -12,13 +13,13 @@ class ProfilePartnerPage extends StatefulWidget {
 }
 
 class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
-  late SettingPageCubit settingPageCubit;
+  late ProfilePageCubit profilePageCubit;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<SettingPageCubit>(context).init(context);
-    settingPageCubit = BlocProvider.of<SettingPageCubit>(context);
+    BlocProvider.of<ProfilePageCubit>(context).init(context);
+    profilePageCubit = BlocProvider.of<ProfilePageCubit>(context);
   }
 
   @override
@@ -86,7 +87,7 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                               CircleAvatar(
                                 radius: 40,
                                 backgroundImage: NetworkImage(
-                                    "${UrlApiAppUser.host}${settingPageCubit.usermodel!.user!.avatar!}"),
+                                    "${UrlApiAppUser.host}${profilePageCubit.usermodel!.avatar!}"),
                               ),
                               const SizedBox(
                                 width: 8,
@@ -95,15 +96,14 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    settingPageCubit.usermodel!.user!.fullName!,
+                                    profilePageCubit.usermodel!.fullName!,
                                     style: const TextStyle(
                                         color: Color(0xFFf57171),
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    settingPageCubit
-                                        .usermodel!.user!.phoneNumber!,
+                                    profilePageCubit.usermodel!.phoneNumber!,
                                   )
                                 ],
                               )
@@ -183,7 +183,7 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                           border:
                                               Border.all(color: Colors.grey)),
                                       child: Text(
-                                        "${AppConstant.oCcy.format(settingPageCubit.usermodel!.user!.balance!)} VND",
+                                        "${AppConstant.oCcy.format(profilePageCubit.usermodel!.balance!)} VND",
                                       ))
                                 ],
                               )
@@ -462,7 +462,7 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                           Row(
                             children: [
                               const Text(
-                                'Hỗ trợ',
+                                'Đăng xuất',
                                 style: TextStyle(
                                     color: Color(0xFF4151b1),
                                     fontSize: 24,
@@ -473,8 +473,10 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                 width: 50,
                                 height: 30,
                                 child: ElevatedButton(
-                                    onPressed: () => Navigator.pushNamed(
-                                        context, AppRouteUser.support),
+                                    // onPressed: () => Navigator.pushNamed(
+                                    //     context, AppRouteUser.support),
+                                    onPressed: () =>
+                                        profilePageCubit.logout(context),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(0),
                                       backgroundColor: const Color(0xFFf57171),
@@ -487,18 +489,18 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                               )
                             ],
                           ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const Row(
-                            children: [
-                              Text(
-                                'Hỗ trợ nhân sự và thời gian làm việc',
-                              ),
-                              Spacer(),
-                              Text('')
-                            ],
-                          ),
+                          // const SizedBox(
+                          //   height: 16,
+                          // ),
+                          // const Row(
+                          //   children: [
+                          //     Text(
+                          //       'Hỗ trợ nhân sự và thời gian làm việc',
+                          //     ),
+                          //     Spacer(),
+                          //     Text('')
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),

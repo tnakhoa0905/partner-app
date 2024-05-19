@@ -23,6 +23,7 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        print(widget.item);
         Navigator.pushNamed(context, AppRouteUser.taskBookingDetail,
             arguments: widget.item);
       },
