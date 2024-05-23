@@ -87,33 +87,40 @@ class _HomePartnerPageState extends State<HomePartnerPage>
                   listener: (context, state) {},
                   builder: (context, state) {
                     if (state is HomePageLoaded) {
-                      return Container(
-                          padding: const EdgeInsets.only(
-                            left: 16.0,
-                            right: 16,
-                          ),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                BlocConsumer<HomePageCubit, HomePageState>(
-                                    bloc: homePageCubit,
-                                    builder: (context, state) {
-                                      return const SizedBox();
-                                    },
-                                    listener: (context, state) {}),
-                                for (var item in homePageCubit.listClean)
-                                  CleanItem(item: item),
-                                for (int i = 0;
-                                    i < homePageCubit.listTaskBooking.length;
-                                    i++)
-                                  TaskBookingItem(
-                                      item: homePageCubit.listTaskBooking[i],
-                                      index: i,
-                                      lenght:
-                                          homePageCubit.listTaskBooking.length)
-                              ],
+                      if (homePageCubit.usermodel!.level! > 1) {
+                        return Container(
+                            padding: const EdgeInsets.only(
+                              left: 16.0,
+                              right: 16,
                             ),
-                          ));
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  BlocConsumer<HomePageCubit, HomePageState>(
+                                      bloc: homePageCubit,
+                                      builder: (context, state) {
+                                        return const SizedBox();
+                                      },
+                                      listener: (context, state) {}),
+                                  for (var item in homePageCubit.listClean)
+                                    CleanItem(item: item),
+                                  for (int i = 0;
+                                      i < homePageCubit.listTaskBooking.length;
+                                      i++)
+                                    TaskBookingItem(
+                                        item: homePageCubit.listTaskBooking[i],
+                                        index: i,
+                                        lenght: homePageCubit
+                                            .listTaskBooking.length)
+                                ],
+                              ),
+                            ));
+                      }
+                      return Center(
+                        child: Text(homePageCubit.usermodel!.level == 0
+                            ? "Bạn đã bị khoá tài khoản"
+                            : "Đang chờ xét duyệt"),
+                      );
                     }
                     return const SizedBox();
                   },
@@ -126,36 +133,43 @@ class _HomePartnerPageState extends State<HomePartnerPage>
                   listener: (context, state) {},
                   builder: (context, state) {
                     if (state is HomePageLoaded) {
-                      return Container(
-                          padding: const EdgeInsets.only(
-                            left: 16.0,
-                            right: 16,
-                          ),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                BlocConsumer<HomePageCubit, HomePageState>(
-                                    bloc: homePageCubit,
-                                    builder: (context, state) {
-                                      return const SizedBox();
-                                    },
-                                    listener: (context, state) {}),
-                                for (var item in homePageCubit.listCleanDone)
-                                  CleanItem(item: item),
-                                for (int i = 0;
-                                    i <
-                                        homePageCubit
-                                            .listTaskBookingDone.length;
-                                    i++)
-                                  TaskBookingItem(
-                                      item:
-                                          homePageCubit.listTaskBookingDone[i],
-                                      index: i,
-                                      lenght:
-                                          homePageCubit.listTaskBooking.length)
-                              ],
+                      if (homePageCubit.usermodel!.level! > 1) {
+                        return Container(
+                            padding: const EdgeInsets.only(
+                              left: 16.0,
+                              right: 16,
                             ),
-                          ));
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  BlocConsumer<HomePageCubit, HomePageState>(
+                                      bloc: homePageCubit,
+                                      builder: (context, state) {
+                                        return const SizedBox();
+                                      },
+                                      listener: (context, state) {}),
+                                  for (var item in homePageCubit.listCleanDone)
+                                    CleanItem(item: item),
+                                  for (int i = 0;
+                                      i <
+                                          homePageCubit
+                                              .listTaskBookingDone.length;
+                                      i++)
+                                    TaskBookingItem(
+                                        item: homePageCubit
+                                            .listTaskBookingDone[i],
+                                        index: i,
+                                        lenght: homePageCubit
+                                            .listTaskBooking.length)
+                                ],
+                              ),
+                            ));
+                      }
+                      return Center(
+                        child: Text(homePageCubit.usermodel!.level == 0
+                            ? "Bạn đã bị khoá tài khoản"
+                            : "Đang chờ xét duyệt"),
+                      );
                     }
                     return const SizedBox();
                   },

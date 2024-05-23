@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/constant/constant.dart';
+import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
+import 'package:partner_app/cubit/home/home_page/home_page_state.dart';
 import 'package:partner_app/cubit/profile/profile_cubit.dart';
 import 'package:partner_app/cubit/setting/setting_cubit.dart';
 import 'package:partner_app/route/app_route.dart';
@@ -14,11 +16,13 @@ class ProfilePartnerPage extends StatefulWidget {
 
 class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
   late ProfilePageCubit profilePageCubit;
+  late HomePageCubit homePageCubit;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<ProfilePageCubit>(context).init(context);
+    // BlocProvider.of<ProfilePageCubit>(context).init(context);
+    homePageCubit = BlocProvider.of<HomePageCubit>(context);
     profilePageCubit = BlocProvider.of<ProfilePageCubit>(context);
   }
 
@@ -66,7 +70,8 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                 width: 50,
                                 height: 30,
                                 child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.pushNamed(
+                                        context, AppRouteUser.editProfile),
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(0),
                                       backgroundColor: const Color(0xFFf57171),
@@ -82,32 +87,42 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                           const SizedBox(
                             height: 16,
                           ),
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 40,
-                                backgroundImage: NetworkImage(
-                                    "${UrlApiAppUser.host}${profilePageCubit.usermodel!.avatar!}"),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    profilePageCubit.usermodel!.fullName!,
-                                    style: const TextStyle(
-                                        color: Color(0xFFf57171),
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    profilePageCubit.usermodel!.phoneNumber!,
-                                  )
-                                ],
-                              )
-                            ],
+                          BlocConsumer<HomePageCubit, HomePageState>(
+                            bloc: homePageCubit,
+                            listener: (context, state) {},
+                            builder: (context, state) {
+                              if (state is HomePageLoaded) {
+                                return Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 40,
+                                      backgroundImage: NetworkImage(
+                                          "${UrlApiAppUser.host}${homePageCubit.usermodel!.avatar!}"),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          homePageCubit.usermodel!.fullName!,
+                                          style: const TextStyle(
+                                              color: Color(0xFFf57171),
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          homePageCubit.usermodel!.phoneNumber!,
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                );
+                              }
+                              return Container();
+                            },
                           ),
                           const SizedBox(
                             height: 16,
@@ -175,16 +190,25 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                   const SizedBox(
                                     height: 16,
                                   ),
-                                  Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          border:
-                                              Border.all(color: Colors.grey)),
-                                      child: Text(
-                                        "${AppConstant.oCcy.format(profilePageCubit.usermodel!.balance!)} VND",
-                                      ))
+                                  BlocConsumer<HomePageCubit, HomePageState>(
+                                    bloc: homePageCubit,
+                                    listener: (context, state) {},
+                                    builder: (context, state) {
+                                      if (state is HomePageLoaded) {
+                                        return Container(
+                                            padding: const EdgeInsets.all(12),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                border: Border.all(
+                                                    color: Colors.grey)),
+                                            child: Text(
+                                              "${AppConstant.oCcy.format(homePageCubit.usermodel!.balance!)} VND",
+                                            ));
+                                      }
+                                      return Container();
+                                    },
+                                  )
                                 ],
                               )
                             ],

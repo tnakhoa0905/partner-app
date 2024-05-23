@@ -17,7 +17,7 @@ class _CleanItemState extends State<CleanItem> {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, AppRouteUser.cleanDetail,
-            arguments: widget.item);
+            arguments: widget.item.id);
       },
       child: Container(
         margin: const EdgeInsets.only(top: 16, bottom: 0),
@@ -33,8 +33,8 @@ class _CleanItemState extends State<CleanItem> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(widget.item.cleanId!.name!,
-                      style: const TextStyle(
+                  const Text("Tổng vệ sinh",
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                       )),
                   Container(

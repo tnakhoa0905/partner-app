@@ -409,25 +409,26 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
               const SizedBox(
                 height: 24,
               ),
-              ElevatedButton(
-                  onPressed: () => homePageCubit.completeTask(
-                      context: context, taskId: widget.item.id!),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    overlayColor: Colors.grey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+              if (widget.item.date!.day == DateTime.now().day)
+                ElevatedButton(
+                    onPressed: () => homePageCubit.completeTask(
+                        context: context, taskId: widget.item.id!),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      overlayColor: Colors.grey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
                     ),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Hoàn thành',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  )),
+                    child: const Center(
+                      child: Text(
+                        'Hoàn thành',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )),
               const SizedBox(
                 height: 8,
               ),

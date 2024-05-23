@@ -78,7 +78,8 @@ class TaskBookingModel {
             ? []
             : List<dynamic>.from(json["remind"]!.map((x) => x)),
         id: json["_id"],
-        userId: json["userId"],
+        userId:
+            json["userId"] is String ? json["userId"] : json["userId"]["_id"],
         companyId: json["companyId"],
         taskId: json["taskId"] == null ? null : TaskId.fromJson(json["taskId"]),
         status: json["status"],
@@ -90,6 +91,7 @@ class TaskBookingModel {
         v: json["__v"],
         taskerId: json["taskerId"] == null
             ? null
+            
             : TaskerId.fromJson(json["taskerId"]),
       );
 

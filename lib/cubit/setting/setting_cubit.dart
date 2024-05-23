@@ -17,9 +17,8 @@ class SettingPageCubit extends Cubit<SettingPageState> {
   User? usermodel;
   init(BuildContext context) {
     usermodel = BlocProvider.of<HomePageCubit>(context).usermodel!;
-    listCalendar = BlocProvider.of<ProfilePageCubit>(context)
-        .usermodel!
-        .freetime as List<int>;
+    listCalendar = BlocProvider.of<HomePageCubit>(context).usermodel!.freetime
+        as List<int>;
   }
 
   updateFreeTime(BuildContext context) async {
@@ -39,7 +38,7 @@ class SettingPageCubit extends Cubit<SettingPageState> {
             "partnerServiceType": [0, 1] // 0: task, 1:clean
           }));
       if (response.statusCode == 200) {
-        BlocProvider.of<ProfilePageCubit>(context).usermodel!.freetime =
+        BlocProvider.of<HomePageCubit>(context).usermodel!.freetime =
             listCalendar;
         BlocProvider.of<HomePageCubit>(context).usermodel!.freetime =
             listCalendar;

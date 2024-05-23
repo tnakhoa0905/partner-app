@@ -25,7 +25,7 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
       onTap: () {
         print(widget.item);
         Navigator.pushNamed(context, AppRouteUser.taskBookingDetail,
-            arguments: widget.item);
+            arguments: widget.item.id);
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -42,8 +42,8 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(widget.item.taskId!.name!,
-                      style: const TextStyle(
+                  const Text("Dọn dẹp nhà",
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                       )),
                   Container(
@@ -52,11 +52,13 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
                         borderRadius: BorderRadius.circular(16),
                         color: Colors.greenAccent.withOpacity(0.5)),
                     child: Text(
-                      widget.item.status == 0
-                          ? 'Đang chờ'
-                          : widget.item.status == 1
-                              ? 'Đã nhận đơn'
-                              : 'Đã hoàn thành',
+                      widget.item.status == 1
+                          ? 'Đã nhận đơn'
+                          : widget.item.status == 2
+                              ? 'Đã hoàn thành'
+                              : widget.item.status == 3
+                                  ? "Người làm huỷ"
+                                  : "Khách hàng huỷ",
                       style:
                           TextStyle(color: Colors.green.shade600, fontSize: 11),
                     ),

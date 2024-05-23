@@ -16,18 +16,26 @@ class SplashCubit extends Cubit<SplashState> {
 
     String? idUser = await _hiveService.getBox("id", 'userModel');
     String? token = await _hiveService.getBox("token", 'userModel');
-   
+
     Future.delayed(const Duration(seconds: 4));
 
     if (idUser != null && token != null) {
       print('here?');
       print(idUser);
       // ignore: use_build_context_synchronously
-      Navigator.pushNamed(context, AppRouteUser.homePartner);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRouteUser.homePartner,
+        (route) => false,
+      );
     } else {
       print('here');
       // ignore: use_build_context_synchronously
-      Navigator.pushNamed(context, AppRouteUser.signInPartner);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRouteUser.signInPartner,
+        (route) => false,
+      );
     }
   }
 }

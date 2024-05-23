@@ -95,6 +95,7 @@ class _PartnerSignInPage extends State<PartnerSignInPage> {
                   controller: signInPartnerCubit.passWord,
                   style: const TextStyle(color: Colors.black),
                   cursorColor: Colors.grey.shade300,
+                  obscureText: true,
                   autofocus: false,
                   decoration: InputDecoration(
                     fillColor: Colors.grey.shade300,

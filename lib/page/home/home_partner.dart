@@ -1,3 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
+import 'package:partner_app/data/notifications_services.dart';
 import 'package:partner_app/page/home/home_page/home_partner_page.dart';
 
 import 'package:flutter/material.dart';
@@ -5,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:partner_app/page/home/message/message_partner_page.dart';
 import 'package:partner_app/page/home/profile/profile_partner_page.dart';
 import 'package:partner_app/page/home/welfare/welfare_partner_page.dart';
+import 'package:partner_app/route/app_route.dart';
 
 class HomePartner extends StatefulWidget {
   const HomePartner({super.key});
@@ -14,6 +18,8 @@ class HomePartner extends StatefulWidget {
 }
 
 class _HomePartnerPageState extends State<HomePartner> {
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   List<Widget> pages = [
     const HomePartnerPage(),
     const MessagePartnerPage(),
@@ -22,11 +28,32 @@ class _HomePartnerPageState extends State<HomePartner> {
   ];
 
   int indexPage = 0;
-  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    NotificationsServices().initialize(
+        onDeviceTokenChanged: (text) {},
+        onMessageOpenedApp: ((payload) {
+          try {
+            print("dcmsaia");
+            print("dcmsaia${payload}");
+            BlocProvider.of<HomePageCubit>(context).init();
+            // Navigator.pop(context);
+            Navigator.pushNamed(context, AppRouteUser.taskBookingDetail,
+                arguments: payload['_id']);
+          } catch (e) {
+            Navigator.pushNamed(context, AppRouteUser.homePartner,
+                arguments: payload['_id']);
+            throw Exception(e);
+          }
+        }));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: navigatorKey,
       backgroundColor: Colors.white,
       body: Stack(
         children: [

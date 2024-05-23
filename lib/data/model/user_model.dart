@@ -90,50 +90,55 @@ class User {
   String? fullName;
   String? phoneNumber;
   DateTime? registerDate;
+  String? email;
+  int? level;
 
-  User({
-    this.gender,
-    this.avatar,
-    this.profilePicture,
-    this.about,
-    this.role,
-    this.expiredAt,
-    this.balance,
-    this.freetime,
-    this.id,
-    this.fullName,
-    this.phoneNumber,
-    this.registerDate,
-  });
+  User(
+      {this.gender,
+      this.avatar,
+      this.profilePicture,
+      this.about,
+      this.role,
+      this.expiredAt,
+      this.balance,
+      this.freetime,
+      this.id,
+      this.fullName,
+      this.phoneNumber,
+      this.registerDate,
+      this.level,
+      this.email});
 
-  User copyWith({
-    int? gender,
-    String? avatar,
-    List<dynamic>? profilePicture,
-    String? about,
-    int? role,
-    dynamic expiredAt,
-    int? balance,
-    List<int>? freetime,
-    String? id,
-    String? fullName,
-    String? phoneNumber,
-    DateTime? registerDate,
-  }) =>
+  User copyWith(
+          {int? gender,
+          String? avatar,
+          List<dynamic>? profilePicture,
+          String? about,
+          int? role,
+          dynamic expiredAt,
+          int? balance,
+          List<int>? freetime,
+          String? id,
+          String? fullName,
+          String? phoneNumber,
+          DateTime? registerDate,
+          int? level,
+          String? email}) =>
       User(
-        gender: gender ?? this.gender,
-        avatar: avatar ?? this.avatar,
-        profilePicture: profilePicture ?? this.profilePicture,
-        about: about ?? this.about,
-        role: role ?? this.role,
-        expiredAt: expiredAt ?? this.expiredAt,
-        balance: balance ?? this.balance,
-        freetime: freetime ?? this.freetime,
-        id: id ?? this.id,
-        fullName: fullName ?? this.fullName,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        registerDate: registerDate ?? this.registerDate,
-      );
+          gender: gender ?? this.gender,
+          avatar: avatar ?? this.avatar,
+          profilePicture: profilePicture ?? this.profilePicture,
+          about: about ?? this.about,
+          role: role ?? this.role,
+          expiredAt: expiredAt ?? this.expiredAt,
+          balance: balance ?? this.balance,
+          freetime: freetime ?? this.freetime,
+          id: id ?? this.id,
+          fullName: fullName ?? this.fullName,
+          phoneNumber: phoneNumber ?? this.phoneNumber,
+          registerDate: registerDate ?? this.registerDate,
+          level: level ?? this.level,
+          email: email ?? this.email);
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         gender: json["gender"],
@@ -154,6 +159,8 @@ class User {
         registerDate: json["registerDate"] == null
             ? null
             : DateTime.parse(json["registerDate"]),
+        level: json["level"],
+        email: json["email"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -172,5 +179,7 @@ class User {
         "fullName": fullName,
         "phoneNumber": phoneNumber,
         "registerDate": registerDate?.toIso8601String(),
+        "email": email,
+        "level": level,
       };
 }

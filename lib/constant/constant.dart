@@ -124,7 +124,10 @@ class UrlApiAppUser {
   static const signIn = "${host}users/login";
   static const signUp = "${host}users/partner_signup";
   static const getUser = "${host}users/get_user_profile";
+  static const updateProfile = "${host}users/update_profile";
+  static const logOut = "${host}users/logout";
   //
+  static const getTaskById = "${host}taskbookings/get_taskbooking_by_id";
   static const getWaitingJob = "${host}users/partner_waiting_task";
   static const getDoneJob = "${host}users/partner_done_task";
   static const completedJob = "${host}users/partner_completed";

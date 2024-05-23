@@ -10,8 +10,8 @@ import 'package:partner_app/route/app_route.dart';
 class SignInPartnerCubit extends Cubit<SignInPartnerState> {
   SignInPartnerCubit() : super(SignInPartnerInitial());
 
-  TextEditingController userName = TextEditingController(text: '0123456789');
-  TextEditingController passWord = TextEditingController(text: 'khoakhoa');
+  TextEditingController userName = TextEditingController(text: '');
+  TextEditingController passWord = TextEditingController(text: '');
   HiveService hiveService = HiveService();
   UserRepository userRepository = UserRepositoryImplement();
 
@@ -23,6 +23,8 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
   init(context) async {
     String? id = await hiveService.getBox("id", HiveService.boxUserModel);
     print(id);
+    userName.clear();
+    passWord.clear();
     if (id != null) {
       Navigator.pushNamed(context, AppRouteUser.homePartner);
     }
@@ -49,7 +51,11 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
         userName.clear();
         passWord.clear();
         emit(SignInPartnerLoaded());
-        Navigator.pushNamed(context, AppRouteUser.homePartner);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRouteUser.homePartner,
+          (route) => false,
+        );
       } else {
         print('Login err');
         emit(SignInPartnerError());
@@ -74,7 +80,11 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
       passwordController.clear();
       emailController.clear();
       fullNameController.clear();
-      Navigator.pushNamed(context, AppRouteUser.signInPartner);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRouteUser.signInPartner,
+        (route) => false,
+      );
     } else {
       print("sai roi");
     }

@@ -37,34 +37,41 @@ class HomePageCubit extends Cubit<HomePageState> {
     String token = (await _hiveService.getBox("token", 'userModel'))!;
     usermodel = await userRepository.getUser(idUser, token);
     initSocket(idUser);
-    try {
-      final response = await taskBookingRepo.getWaitingTask(idUser, token);
-      if (response != null) {
-        for (var item in jsonDecode(response)["data"]['taskBookingWaiting']) {
-          listTaskBookingResult.add(TaskBookingModel.fromJson(item));
-        }
+    if (usermodel!.level! > 1) {
+      try {
+        final response = await taskBookingRepo.getWaitingTask(idUser, token);
+        if (response != null) {
+          for (var item in jsonDecode(response)["data"]['taskBookingWaiting']) {
+            listTaskBookingResult.add(TaskBookingModel.fromJson(item));
+          }
 
-        for (var item in jsonDecode(response)["data"]['cleanBookingWaiting']) {
-          listCleanResult.add(CleanModel.fromJson(item));
+          for (var item in jsonDecode(response)["data"]
+              ['cleanBookingWaiting']) {
+            listCleanResult.add(CleanModel.fromJson(item));
+          }
+          listTaskBooking = listTaskBookingResult;
+          listClean = listCleanResult;
         }
-        listTaskBooking = listTaskBookingResult;
-        listClean = listCleanResult;
-      }
-      final responseDone = await taskBookingRepo.getDoneTask(idUser, token);
-      if (responseDone != null) {
-        for (var item in jsonDecode(responseDone)["data"]['taskBookingDone']) {
-          listTaskBookingDoneResult.add(TaskBookingModel.fromJson(item));
-        }
+        final responseDone = await taskBookingRepo.getDoneTask(idUser, token);
+        if (responseDone != null) {
+          for (var item in jsonDecode(responseDone)["data"]
+              ['taskBookingDone']) {
+            listTaskBookingDoneResult.add(TaskBookingModel.fromJson(item));
+          }
 
-        for (var item in jsonDecode(responseDone)["data"]['cleanBookingDone']) {
-          listCleanDoneResult.add(CleanModel.fromJson(item));
+          for (var item in jsonDecode(responseDone)["data"]
+              ['cleanBookingDone']) {
+            listCleanDoneResult.add(CleanModel.fromJson(item));
+          }
+          listTaskBookingDone = listTaskBookingDoneResult;
+          listCleanDone = listCleanDoneResult;
         }
-        listTaskBookingDone = listTaskBookingDoneResult;
-        listCleanDone = listCleanDoneResult;
+        emit(HomePageLoaded());
+      } catch (e) {
+        throw Exception(e);
       }
+    } else {
       emit(HomePageLoaded());
-    } catch (e) {
-      throw Exception(e);
     }
   }
 

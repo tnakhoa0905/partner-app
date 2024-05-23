@@ -9,3 +9,7 @@ class ProfilePageInitial extends ProfilePageState {
 class ProfilePageLoaded extends ProfilePageState {
   ProfilePageLoaded();
 }
+
+class ProfilePageLoading extends ProfilePageState {
+  ProfilePageLoading();
+}

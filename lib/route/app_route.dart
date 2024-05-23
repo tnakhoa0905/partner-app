@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:partner_app/data/model/clean_task_model.dart';
 import 'package:partner_app/data/model/task_booking_model.dart';
+import 'package:partner_app/page/edit_profile/edit_profile_page.dart';
 import 'package:partner_app/page/finance/finance_partner_page.dart';
 import 'package:partner_app/page/home/home_partner.dart';
 import 'package:partner_app/page/income_history/income_history_partner_page.dart';
@@ -36,10 +37,11 @@ class RouteGenerate {
         }
       case (AppRouteUser.taskBookingDetail):
         {
-          TaskBookingModel taskBookingModel = args as TaskBookingModel;
+          // TaskBookingModel taskBookingModel = args as TaskBookingModel;
+          String taskId = args as String;
           return MaterialPageRoute(
               builder: (context) => TaskBookingDetailPage(
-                    taskBookingModel: taskBookingModel,
+                    taskId: taskId,
                   ));
         }
       case (AppRouteUser.finance):
@@ -60,6 +62,9 @@ class RouteGenerate {
       case (AppRouteUser.weekReport):
         return MaterialPageRoute(
             builder: ((context) => const WeekReportPartnerPage()));
+      case (AppRouteUser.editProfile):
+        return MaterialPageRoute(
+            builder: ((context) => const EditProfilePage()));
       default:
         return errorRoute();
     }
@@ -91,6 +96,7 @@ class AppRouteUser {
   static const String homePartner = "home_partner";
   static const String signInPartner = "sign_in_partner";
   static const String signUpPartner = "sign_up_partner";
+  static const String editProfile = "/edit_profile";
   static const String cleanDetail = "/clean_detail";
   static const String taskBookingDetail = "/task_booking_detail";
   //

@@ -12,6 +12,13 @@ abstract class UserRepository {
       required String email,
       required String fullName});
   Future<User?> getUser(String id, token);
+  Future<bool> updateUser(
+      {required String id,
+      required String phoneNumber,
+      required String email,
+      required String fullName,
+      required String token});
+  Future<bool> logOut({required String userId, required String token});
 }
 
 class UserRepositoryImplement extends UserRepository {
@@ -38,6 +45,38 @@ class UserRepositoryImplement extends UserRepository {
       Exception(e);
     }
     return null;
+  }
+
+  @override
+  Future<bool> updateUser(
+      {required String id,
+      required String phoneNumber,
+      required String email,
+      required String fullName,
+      required String token}) async {
+    // TODO: implement updateUser
+    try {
+      print('go go');
+      final response = await http.post(Uri.parse(UrlApiAppUser.updateProfile),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({
+            "userInfo": {
+              "_id": id,
+              "fullName": fullName,
+              "email": email,
+              "phoneNumber": phoneNumber,
+            }
+          }));
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   @override
@@ -92,5 +131,31 @@ class UserRepositoryImplement extends UserRepository {
       Exception(e);
     }
     return null;
+  }
+
+  @override
+  Future<bool> logOut({required String userId, required String token}) async {
+    // TODO: implement logOut
+    try {
+      print('go go');
+      print(userId);
+      final response = await http.post(Uri.parse(UrlApiAppUser.logOut),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({
+            "userId": userId,
+          }));
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print('ccccc');
+        print(jsonDecode(response.body)["data"]);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }

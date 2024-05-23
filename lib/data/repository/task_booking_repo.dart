@@ -9,6 +9,7 @@ abstract class TaskBookingRepo {
   Future<bool> cancelTask(String taskerId, String taskId, String token);
   Future<dynamic> getWaitingTask(String taskerId, String token);
   Future<dynamic> getDoneTask(String taskerId, String token);
+  Future<TaskBookingModel?> getTaskBookingById(String taskId, String token);
 }
 
 class TaskBookingRepoImplement extends TaskBookingRepo {
@@ -88,6 +89,28 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
           headers: headers, body: jsonEncode({"taskerId": taskerId}));
       if (response.statusCode == 200) {
         return response.body;
+      }
+      return null;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<TaskBookingModel?> getTaskBookingById(
+      String taskId, String token) async {
+    // TODO: implement getTaskBookingById
+    try {
+      print('go go');
+      var headers = {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Authorization': 'Bearer $token',
+      };
+      final response = await http.post(Uri.parse(UrlApiAppUser.getTaskById),
+          headers: headers, body: jsonEncode({"_id": taskId}));
+      if (response.statusCode == 200) {
+        print(response.body);
+        return TaskBookingModel.fromJson(jsonDecode(response.body)["data"]);
       }
       return null;
     } catch (e) {
