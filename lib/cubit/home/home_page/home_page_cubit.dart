@@ -12,6 +12,7 @@ import 'package:partner_app/data/repository/task_booking_repo.dart';
 import 'package:partner_app/data/repository/user_repo.dart';
 import 'package:partner_app/route/app_route.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit() : super(HomePageInitial());
@@ -30,7 +31,6 @@ class HomePageCubit extends Cubit<HomePageState> {
     print('go');
     List<TaskBookingModel> listTaskBookingResult = [];
     List<CleanModel> listCleanResult = [];
-    //
     List<TaskBookingModel> listTaskBookingDoneResult = [];
     List<CleanModel> listCleanDoneResult = [];
     String idUser = (await _hiveService.getBox("id", 'userModel'))!;
@@ -72,6 +72,47 @@ class HomePageCubit extends Cubit<HomePageState> {
       }
     } else {
       emit(HomePageLoaded());
+    }
+  }
+
+  getList() async {
+    print('Get list');
+    List<TaskBookingModel> listTaskBookingResult = [];
+    List<CleanModel> listCleanResult = [];
+    //
+    List<TaskBookingModel> listTaskBookingDoneResult = [];
+    List<CleanModel> listCleanDoneResult = [];
+    String idUser = (await _hiveService.getBox("id", 'userModel'))!;
+    String token = (await _hiveService.getBox("token", 'userModel'))!;
+    usermodel = await userRepository.getUser(idUser, token);
+    try {
+      final response = await taskBookingRepo.getWaitingTask(idUser, token);
+      if (response != null) {
+        for (var item in jsonDecode(response)["data"]['taskBookingWaiting']) {
+          listTaskBookingResult.add(TaskBookingModel.fromJson(item));
+        }
+
+        for (var item in jsonDecode(response)["data"]['cleanBookingWaiting']) {
+          listCleanResult.add(CleanModel.fromJson(item));
+        }
+        listTaskBooking = listTaskBookingResult;
+        listClean = listCleanResult;
+      }
+      final responseDone = await taskBookingRepo.getDoneTask(idUser, token);
+      if (responseDone != null) {
+        for (var item in jsonDecode(responseDone)["data"]['taskBookingDone']) {
+          listTaskBookingDoneResult.add(TaskBookingModel.fromJson(item));
+        }
+
+        for (var item in jsonDecode(responseDone)["data"]['cleanBookingDone']) {
+          listCleanDoneResult.add(CleanModel.fromJson(item));
+        }
+        listTaskBookingDone = listTaskBookingDoneResult;
+        listCleanDone = listCleanDoneResult;
+      }
+      emit(HomePageLoaded());
+    } catch (e) {
+      throw Exception(e);
     }
   }
 
@@ -145,5 +186,14 @@ class HomePageCubit extends Cubit<HomePageState> {
     } else {
       print('error');
     }
+  }
+
+  createPaymentLink(TaskBookingModel taskBookingModel) async {
+    String? launchUr =
+        await taskBookingRepo.createPaymentLink(taskBookingModel);
+
+    if (launchUr != null) launchUrl(Uri.parse(launchUr));
+    // launchUrl(Uri.parse("https://partnerapppdtech.page.link/home_partner"));
+    //
   }
 }

@@ -133,5 +133,7 @@ class UrlApiAppUser {
   static const completedJob = "${host}users/partner_completed";
   static const cancelJob = "${host}users/partner_cancel_task";
   static const updateFreeTime = "${host}users/partner_update_freetime";
+  static const createPayment = "${host}payments/create_payment_link";
+
   //
 }

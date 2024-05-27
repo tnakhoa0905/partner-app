@@ -1,3 +1,4 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
 import 'package:partner_app/data/notifications_services.dart';
@@ -32,6 +33,7 @@ class _HomePartnerPageState extends State<HomePartner> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    init();
     NotificationsServices().initialize(
         onDeviceTokenChanged: (text) {},
         onMessageOpenedApp: ((payload) {
@@ -48,6 +50,37 @@ class _HomePartnerPageState extends State<HomePartner> {
             throw Exception(e);
           }
         }));
+  }
+
+  init() async {
+    print("*" * 100);
+
+    // final PendingDynamicLinkData? initialLink =
+    //     await FirebaseDynamicLinksPlatform.instance.getDynamicLink(Uri.parse(
+    //         "https://partnerapppdtechdeeplink.page.link/home_partner"));
+    final PendingDynamicLinkData? initialLink =
+        await FirebaseDynamicLinksPlatform.instance.getInitialLink();
+
+    if (initialLink != null) {
+      final Uri deepLink = initialLink.link;
+      print(deepLink.path);
+      print(deepLink.data);
+      // Example of using the dynamic link to push the user to a different screen
+      Navigator.pushNamed(context, deepLink.path);
+    }
+
+    FirebaseDynamicLinksPlatform.instance.onLink.listen(
+      (pendingDynamicLinkData) {
+        // Set up the `onLink` event listener next as it may be received here
+        if (pendingDynamicLinkData != null) {
+          final Uri deepLink = pendingDynamicLinkData.link;
+          print(deepLink.path);
+          // Example of using the dynamic link to push the user to a different screen
+          Navigator.pushNamedAndRemoveUntil(
+              context, deepLink.path, (route) => true);
+        }
+      },
+    );
   }
 
   @override

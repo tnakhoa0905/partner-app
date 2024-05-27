@@ -5,6 +5,7 @@ import 'package:partner_app/page/edit_profile/edit_profile_page.dart';
 import 'package:partner_app/page/finance/finance_partner_page.dart';
 import 'package:partner_app/page/home/home_partner.dart';
 import 'package:partner_app/page/income_history/income_history_partner_page.dart';
+import 'package:partner_app/page/payment/payment_page.dart';
 import 'package:partner_app/page/setting/setting_partner_page.dart';
 import 'package:partner_app/page/sign_in/partner_sign_in_page.dart';
 import 'package:partner_app/page/sign_up/partner_sign_up_page.dart';
@@ -65,6 +66,8 @@ class RouteGenerate {
       case (AppRouteUser.editProfile):
         return MaterialPageRoute(
             builder: ((context) => const EditProfilePage()));
+      case (AppRouteUser.paymentPage):
+        return MaterialPageRoute(builder: ((context) => const PaymentPage()));
       default:
         return errorRoute();
     }
@@ -93,9 +96,9 @@ class AppRouteUser {
   static const String splash = "/splash";
 
   // PARTNER
-  static const String homePartner = "home_partner";
-  static const String signInPartner = "sign_in_partner";
-  static const String signUpPartner = "sign_up_partner";
+  static const String homePartner = "/home_partner";
+  static const String signInPartner = "/sign_in_partner";
+  static const String signUpPartner = "/sign_up_partner";
   static const String editProfile = "/edit_profile";
   static const String cleanDetail = "/clean_detail";
   static const String taskBookingDetail = "/task_booking_detail";
@@ -107,4 +110,7 @@ class AppRouteUser {
   static const String setting = "/setting";
   static const String support = "/support";
   static const String weekReport = "/week_report";
+
+  //payment
+  static const String paymentPage = "/payment";
 }

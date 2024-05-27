@@ -10,6 +10,7 @@ abstract class TaskBookingRepo {
   Future<dynamic> getWaitingTask(String taskerId, String token);
   Future<dynamic> getDoneTask(String taskerId, String token);
   Future<TaskBookingModel?> getTaskBookingById(String taskId, String token);
+  Future<String?> createPaymentLink(TaskBookingModel taskBookingModel);
 }
 
 class TaskBookingRepoImplement extends TaskBookingRepo {
@@ -111,6 +112,29 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
       if (response.statusCode == 200) {
         print(response.body);
         return TaskBookingModel.fromJson(jsonDecode(response.body)["data"]);
+      }
+      return null;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<String?> createPaymentLink(TaskBookingModel taskBookingModel) async {
+    // TODO: implement createPaymentLink
+    try {
+      print('go go');
+      print(taskBookingModel.toJson());
+
+      final response = await http.post(Uri.parse(UrlApiAppUser.createPayment),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(taskBookingModel.toJson()));
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        return jsonDecode(response.body)["data"]["checkoutUrl"];
       }
       return null;
     } catch (e) {

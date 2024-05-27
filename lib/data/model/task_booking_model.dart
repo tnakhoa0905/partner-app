@@ -26,22 +26,23 @@ class TaskBookingModel {
   int? taskBookingModelId;
   int? v;
   TaskerId? taskerId;
+  int? type;
 
-  TaskBookingModel({
-    this.remind,
-    this.id,
-    this.userId,
-    this.companyId,
-    this.taskId,
-    this.status,
-    this.price,
-    this.time,
-    this.date,
-    this.isPaid,
-    this.taskBookingModelId,
-    this.v,
-    this.taskerId,
-  });
+  TaskBookingModel(
+      {this.remind,
+      this.id,
+      this.userId,
+      this.companyId,
+      this.taskId,
+      this.status,
+      this.price,
+      this.time,
+      this.date,
+      this.isPaid,
+      this.taskBookingModelId,
+      this.v,
+      this.taskerId,
+      this.type = 0});
   TaskBookingModel copyWith({
     required List<dynamic> remind,
     required String id,
@@ -56,44 +57,45 @@ class TaskBookingModel {
     required int taskBookingModelId,
     required int v,
     TaskerId? taskerId,
+    int? type,
   }) =>
       TaskBookingModel(
-        remind: remind,
-        id: id,
-        userId: userId,
-        companyId: companyId,
-        taskId: taskId,
-        status: status,
-        price: price,
-        time: time,
-        date: date,
-        isPaid: isPaid,
-        taskBookingModelId: taskBookingModelId,
-        v: v,
-        taskerId: taskerId ?? this.taskerId,
-      );
+          remind: remind,
+          id: id,
+          userId: userId,
+          companyId: companyId,
+          taskId: taskId,
+          status: status,
+          price: price,
+          time: time,
+          date: date,
+          isPaid: isPaid,
+          taskBookingModelId: taskBookingModelId,
+          v: v,
+          taskerId: taskerId ?? this.taskerId,
+          type: type ?? 0);
   factory TaskBookingModel.fromJson(Map<String, dynamic> json) =>
       TaskBookingModel(
-        remind: json["remind"] == null
-            ? []
-            : List<dynamic>.from(json["remind"]!.map((x) => x)),
-        id: json["_id"],
-        userId:
-            json["userId"] is String ? json["userId"] : json["userId"]["_id"],
-        companyId: json["companyId"],
-        taskId: json["taskId"] == null ? null : TaskId.fromJson(json["taskId"]),
-        status: json["status"],
-        price: json["price"],
-        time: json["time"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
-        isPaid: json["isPaid"],
-        taskBookingModelId: json["id"],
-        v: json["__v"],
-        taskerId: json["taskerId"] == null
-            ? null
-            
-            : TaskerId.fromJson(json["taskerId"]),
-      );
+          remind: json["remind"] == null
+              ? []
+              : List<dynamic>.from(json["remind"]!.map((x) => x)),
+          id: json["_id"],
+          userId:
+              json["userId"] is String ? json["userId"] : json["userId"]["_id"],
+          companyId: json["companyId"],
+          taskId:
+              json["taskId"] == null ? null : TaskId.fromJson(json["taskId"]),
+          status: json["status"],
+          price: json["price"],
+          time: json["time"],
+          date: json["date"] == null ? null : DateTime.parse(json["date"]),
+          isPaid: json["isPaid"],
+          taskBookingModelId: json["id"],
+          v: json["__v"],
+          taskerId: json["taskerId"] == null
+              ? null
+              : TaskerId.fromJson(json["taskerId"]),
+          type: json["type"] ?? 0);
 
   Map<String, dynamic> toJson() => {
         "remind":
@@ -110,6 +112,7 @@ class TaskBookingModel {
         "id": taskBookingModelId,
         "__v": v,
         "taskerId": taskerId?.toJson(),
+        "type": type
       };
 }
 
