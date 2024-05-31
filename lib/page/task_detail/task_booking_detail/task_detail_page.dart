@@ -11,8 +11,9 @@ import 'package:partner_app/data/model/task_booking_model.dart';
 // import 'package:partner_app/route/app_route.dart';
 
 class TaskBookingDetailPage extends StatefulWidget {
-  const TaskBookingDetailPage({super.key, required this.taskId});
+  const TaskBookingDetailPage({super.key, required this.taskId, this.type});
   final String taskId;
+  final String? type;
 
   @override
   State<TaskBookingDetailPage> createState() => _TaskBookingDetailPageState();
@@ -27,6 +28,7 @@ class _TaskBookingDetailPageState extends State<TaskBookingDetailPage> {
     super.initState();
     // BlocProvider.of<CleanDetailCubit>(context).init(widget.item);
     homePageCubit = BlocProvider.of<HomePageCubit>(context);
+    // homePageCubit = BlocProvider.of<HomePageCubit>(context).createPaymentLink();
     BlocProvider.of<TaskBookingDetailCubit>(context).init(widget.taskId);
     taskBookingDetailCubit = BlocProvider.of<TaskBookingDetailCubit>(context);
   }
@@ -517,27 +519,30 @@ class _TaskBookingDetailPageState extends State<TaskBookingDetailPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                             )),
-                        ElevatedButton(
-                            onPressed: () {
-                              homePageCubit.createPaymentLink(
-                                  taskBookingDetailCubit.taskBookingModel!);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey.shade200,
-                              overlayColor: Colors.grey,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        if (taskBookingDetailCubit
+                                .taskBookingModel!.date!.day ==
+                            DateTime.now().day)
+                          ElevatedButton(
+                              onPressed: () {
+                                homePageCubit.createPaymentLink(
+                                    taskBookingDetailCubit.taskBookingModel!);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.grey.shade200,
+                                overlayColor: Colors.grey,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
                               ),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Thanh toán onl',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ))
+                              child: const Center(
+                                child: Text(
+                                  'Thanh toán onl',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ))
                       ],
                     );
                   }

@@ -1,5 +1,6 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:partner_app/constant/constant.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
 import 'package:partner_app/data/notifications_services.dart';
 import 'package:partner_app/page/home/home_page/home_partner_page.dart';
@@ -10,6 +11,7 @@ import 'package:partner_app/page/home/message/message_partner_page.dart';
 import 'package:partner_app/page/home/profile/profile_partner_page.dart';
 import 'package:partner_app/page/home/welfare/welfare_partner_page.dart';
 import 'package:partner_app/route/app_route.dart';
+import 'dart:io' show Platform;
 
 class HomePartner extends StatefulWidget {
   const HomePartner({super.key});
@@ -54,30 +56,67 @@ class _HomePartnerPageState extends State<HomePartner> {
 
   init() async {
     print("*" * 100);
-
-    // final PendingDynamicLinkData? initialLink =
-    //     await FirebaseDynamicLinksPlatform.instance.getDynamicLink(Uri.parse(
-    //         "https://partnerapppdtechdeeplink.page.link/home_partner"));
     final PendingDynamicLinkData? initialLink =
         await FirebaseDynamicLinksPlatform.instance.getInitialLink();
 
     if (initialLink != null) {
       final Uri deepLink = initialLink.link;
-      print(deepLink.path);
+      print("initialLink${deepLink.path}");
       print(deepLink.data);
       // Example of using the dynamic link to push the user to a different screen
-      Navigator.pushNamed(context, deepLink.path);
+      if (deepLink.path.contains(AppRouteUser.paymentSuccessPage)) {
+        print("initialLink1${deepLink.path}");
+        if (Platform.isAndroid) {
+          if (!mounted) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, deepLink.path, (route) => false);
+          }
+        } else if (Platform.isIOS) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, deepLink.path, (route) => false);
+        }
+      }
     }
 
     FirebaseDynamicLinksPlatform.instance.onLink.listen(
       (pendingDynamicLinkData) {
+        print(Platform.isAndroid);
+        print(Platform.isIOS);
+
+        print("asdsadsjdkfhadjfhlkadjkadhfkljsdahfkjldhkjf");
         // Set up the `onLink` event listener next as it may be received here
         if (pendingDynamicLinkData != null) {
           final Uri deepLink = pendingDynamicLinkData.link;
-          print(deepLink.path);
+          print("onLink${deepLink.path}");
+          print("onLink${deepLink.queryParametersAll}");
           // Example of using the dynamic link to push the user to a different screen
-          Navigator.pushNamedAndRemoveUntil(
-              context, deepLink.path, (route) => true);
+          if (deepLink.path.contains(AppRouteUser.paymentSuccessPage)) {
+            print("onLink1${deepLink.path}");
+            if (Platform.isAndroid) {
+              if (!mounted) {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, deepLink.path, (route) => false);
+              }
+            } else {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, deepLink.path, (route) => false);
+            }
+          } else {
+            print("onLink2${deepLink.path}");
+            if (Platform.isAndroid) {
+              if (!mounted) {
+                Navigator.pushNamed(
+                  context,
+                  deepLink.path,
+                );
+              }
+            } else {
+              Navigator.pushNamed(
+                context,
+                deepLink.path,
+              );
+            }
+          }
         }
       },
     );

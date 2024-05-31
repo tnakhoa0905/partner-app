@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:partner_app/constant/constant.dart';
+import 'package:partner_app/cubit/clean_detail/clean_detail_state.dart';
 import 'package:partner_app/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
 import 'package:partner_app/cubit/profile/profile_cubit.dart';
@@ -84,11 +85,12 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<TaskBookingDetailCubit>(
             create: (context) => TaskBookingDetailCubit()),
         BlocProvider<EditProfileCubit>(create: (context) => EditProfileCubit()),
+        BlocProvider<CleanDetailCubit>(create: (context) => CleanDetailCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeApp.lightMode,
-        initialRoute: AppRouteUser.paymentPage,
+        initialRoute: AppRouteUser.splash,
         onGenerateRoute: RouteGenerate.generateRoute,
       ),
     );

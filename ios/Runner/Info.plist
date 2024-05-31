@@ -48,10 +48,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<!-- <key>FirebaseDynamicLinksCustomDomains</key>
+	<key>FirebaseDynamicLinksCustomDomains</key>
 	<array>
-		<string>https://partnerapppdtech.page.link/home_partner</string>
-	</array> -->
+		<string>https://partnerapppdtechdeeplink.page.link/home_partner</string>
+		<string>https://partnerapppdtechdeeplink.page.link/payment_success</string>
+	</array>
 	<key>FlutterDeepLinkingEnabled</key>
 	<true/>
 	<key>FirebaseDeepLinkPasteboardRetrievalEnabled</key>

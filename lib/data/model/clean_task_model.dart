@@ -77,7 +77,7 @@ String createCleanModelToJson(CreateCleanModel data) =>
 class CleanModel {
   List<TaskerId>? taskerIdArr;
   String? id;
-  String? userId;
+  UserId? userId;
   CleanId? cleanId;
   int? status;
   String? companyId;
@@ -105,7 +105,7 @@ class CleanModel {
   CleanModel copyWith({
     List<TaskerId>? taskerIdArr,
     String? id,
-    String? userId,
+    UserId? userId,
     CleanId? cleanId,
     int? status,
     String? companyId,
@@ -137,7 +137,8 @@ class CleanModel {
             : List<TaskerId>.from(
                 json["taskerIdArr"]!.map((x) => TaskerId.fromJson(x))),
         id: json["_id"],
-        userId: json["userId"],
+        userId:
+            json["userId"] == null ? null : UserId.fromJson(json["cleanId"]),
         cleanId:
             json["cleanId"] == null ? null : CleanId.fromJson(json["cleanId"]),
         status: json["status"],
@@ -232,5 +233,40 @@ class CleanId {
         "price": price,
         "id": cleanIdId,
         "__v": v,
+      };
+}
+
+class UserId {
+  String? id;
+  String? fullName;
+  String? phoneNumber;
+
+  UserId({
+    this.id,
+    this.fullName,
+    this.phoneNumber,
+  });
+
+  UserId copyWith({
+    String? id,
+    String? fullName,
+    String? phoneNumber,
+  }) =>
+      UserId(
+        id: id ?? this.id,
+        fullName: fullName ?? this.fullName,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+      );
+
+  factory UserId.fromJson(Map<String, dynamic> json) => UserId(
+        id: json["_id"],
+        fullName: json["fullName"],
+        phoneNumber: json["phoneNumber"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "fullName": fullName,
+        "phoneNumber": phoneNumber,
       };
 }

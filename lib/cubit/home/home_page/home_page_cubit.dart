@@ -51,6 +51,7 @@ class HomePageCubit extends Cubit<HomePageState> {
           }
           listTaskBooking = listTaskBookingResult;
           listClean = listCleanResult;
+          print(listClean);
         }
         final responseDone = await taskBookingRepo.getDoneTask(idUser, token);
         if (responseDone != null) {
@@ -149,7 +150,9 @@ class HomePageCubit extends Cubit<HomePageState> {
     bool result = await taskBookingRepo.completeTask(taskerId, taskId, token);
     if (result) {
       socket.emit('partner_done_task', {
-        "userId": taskerId,
+        "userId": taskBookingModel != null
+            ? taskBookingModel.userId
+            : cleanModel?.userId,
         "note": "Taker donetask",
         "data": {
           "type": taskBookingModel != null ? "taskBooking" : "clean",
@@ -173,11 +176,14 @@ class HomePageCubit extends Cubit<HomePageState> {
     bool result = await taskBookingRepo.cancelTask(taskerId, taskId, token);
     if (result) {
       socket.emit('partner_cancel_task', {
-        "userId": taskerId,
         "note": "Taker donetask",
         "data": {
           "type": taskBookingModel != null ? "taskBooking" : "clean",
-          "_id": taskBookingModel != null ? taskBookingModel.id : cleanModel?.id
+          "_id":
+              taskBookingModel != null ? taskBookingModel.id : cleanModel?.id,
+          "userId": taskBookingModel != null
+              ? taskBookingModel.userId
+              : cleanModel?.userId,
         }
       });
 
@@ -192,7 +198,9 @@ class HomePageCubit extends Cubit<HomePageState> {
     String? launchUr =
         await taskBookingRepo.createPaymentLink(taskBookingModel);
 
-    if (launchUr != null) launchUrl(Uri.parse(launchUr));
+    if (launchUr != null) {
+      launchUrl(Uri.parse(launchUr), mode: LaunchMode.externalApplication);
+    }
     // launchUrl(Uri.parse("https://partnerapppdtech.page.link/home_partner"));
     //
   }

@@ -50,6 +50,25 @@ class _HomePartnerPageState extends State<HomePartnerPage>
     _refreshController.loadComplete();
   }
 
+  void _onRefreshDone() async {
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000));
+    print("...");
+    BlocProvider.of<HomePageCubit>(context).getList();
+
+    // if failed,use refreshFailed()
+    _refreshControllerDone.refreshCompleted();
+  }
+
+  void _onLoadingDone() async {
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+
+    if (mounted) setState(() {});
+    _refreshControllerDone.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -121,18 +140,18 @@ class _HomePartnerPageState extends State<HomePartnerPage>
                               builder: (context, mode) {
                                 Widget body;
                                 if (mode == RefreshStatus.idle) {
-                                  body = Text("Làm mới");
+                                  body = const Text("Làm mới");
                                 } else if (mode == RefreshStatus.refreshing) {
-                                  body = CupertinoActivityIndicator();
+                                  body = const CupertinoActivityIndicator();
                                 } else if (mode == RefreshStatus.failed) {
-                                  body = Text("Load Failed!Click retry!");
+                                  body = const Text("Load Failed!Click retry!");
                                 } else if (mode == RefreshStatus.completed) {
-                                  body = SizedBox(
+                                  body = const SizedBox(
                                     height: 0,
                                   );
                                   // body = Text("Làm mới thành công");
                                 } else {
-                                  body = Text("Thả để làm mới");
+                                  body = const Text("Thả để làm mới");
                                 }
                                 return SizedBox(
                                   // height: 55.0,
@@ -199,18 +218,18 @@ class _HomePartnerPageState extends State<HomePartnerPage>
                               builder: (context, mode) {
                                 Widget body;
                                 if (mode == RefreshStatus.idle) {
-                                  body = Text("Làm mới");
+                                  body = const Text("Làm mới");
                                 } else if (mode == RefreshStatus.refreshing) {
-                                  body = CupertinoActivityIndicator();
+                                  body = const CupertinoActivityIndicator();
                                 } else if (mode == RefreshStatus.failed) {
-                                  body = Text("Load Failed!Click retry!");
+                                  body = const Text("Load Failed!Click retry!");
                                 } else if (mode == RefreshStatus.completed) {
-                                  body = SizedBox(
+                                  body = const SizedBox(
                                     height: 0,
                                   );
                                   // body = Text("Làm mới thành công");
                                 } else {
-                                  body = Text("Thả để làm mới");
+                                  body = const Text("Thả để làm mới");
                                 }
                                 return SizedBox(
                                   // height: 55.0,
@@ -218,34 +237,37 @@ class _HomePartnerPageState extends State<HomePartnerPage>
                                 );
                               }),
                           controller: _refreshControllerDone,
-                          onRefresh: _onRefresh,
+                          onRefresh: _onRefreshDone,
                           child: Container(
                               padding: const EdgeInsets.only(
                                 left: 16.0,
                                 right: 16,
                               ),
-                              child: Column(
-                                children: [
-                                  BlocConsumer<HomePageCubit, HomePageState>(
-                                      bloc: homePageCubit,
-                                      builder: (context, state) {
-                                        return const SizedBox();
-                                      },
-                                      listener: (context, state) {}),
-                                  for (var item in homePageCubit.listCleanDone)
-                                    CleanItem(item: item),
-                                  for (int i = 0;
-                                      i <
-                                          homePageCubit
-                                              .listTaskBookingDone.length;
-                                      i++)
-                                    TaskBookingItem(
-                                        item: homePageCubit
-                                            .listTaskBookingDone[i],
-                                        index: i,
-                                        lenght: homePageCubit
-                                            .listTaskBooking.length)
-                                ],
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    BlocConsumer<HomePageCubit, HomePageState>(
+                                        bloc: homePageCubit,
+                                        builder: (context, state) {
+                                          return const SizedBox();
+                                        },
+                                        listener: (context, state) {}),
+                                    for (var item
+                                        in homePageCubit.listCleanDone)
+                                      CleanItem(item: item),
+                                    for (int i = 0;
+                                        i <
+                                            homePageCubit
+                                                .listTaskBookingDone.length;
+                                        i++)
+                                      TaskBookingItem(
+                                          item: homePageCubit
+                                              .listTaskBookingDone[i],
+                                          index: i,
+                                          lenght: homePageCubit
+                                              .listTaskBooking.length)
+                                  ],
+                                ),
                               )),
                         );
                       }

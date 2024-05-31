@@ -5,7 +5,9 @@ import 'package:partner_app/page/edit_profile/edit_profile_page.dart';
 import 'package:partner_app/page/finance/finance_partner_page.dart';
 import 'package:partner_app/page/home/home_partner.dart';
 import 'package:partner_app/page/income_history/income_history_partner_page.dart';
+import 'package:partner_app/page/payment/cancel_payment_page.dart';
 import 'package:partner_app/page/payment/payment_page.dart';
+import 'package:partner_app/page/payment/payment_success_page.dart';
 import 'package:partner_app/page/setting/setting_partner_page.dart';
 import 'package:partner_app/page/sign_in/partner_sign_in_page.dart';
 import 'package:partner_app/page/sign_up/partner_sign_up_page.dart';
@@ -34,15 +36,16 @@ class RouteGenerate {
       case (AppRouteUser.cleanDetail):
         {
           return MaterialPageRoute(
-              builder: (context) => CleanDetailPage(item: args as CleanModel));
+              builder: (context) => CleanDetailPage(id: args as String));
         }
       case (AppRouteUser.taskBookingDetail):
         {
+          print(args);
           // TaskBookingModel taskBookingModel = args as TaskBookingModel;
           String taskId = args as String;
           return MaterialPageRoute(
               builder: (context) => TaskBookingDetailPage(
-                    taskId: taskId,
+                    taskId: "taskId",
                   ));
         }
       case (AppRouteUser.finance):
@@ -68,6 +71,13 @@ class RouteGenerate {
             builder: ((context) => const EditProfilePage()));
       case (AppRouteUser.paymentPage):
         return MaterialPageRoute(builder: ((context) => const PaymentPage()));
+      case (AppRouteUser.paymentSuccessPage):
+        return MaterialPageRoute(
+            builder: ((context) => const PaymentSuccessPage()));
+      case (AppRouteUser.paymentCancelPage):
+        return MaterialPageRoute(
+            builder: ((context) => const CancelPaymentPage()));
+
       default:
         return errorRoute();
     }
@@ -113,4 +123,6 @@ class AppRouteUser {
 
   //payment
   static const String paymentPage = "/payment";
+  static const String paymentSuccessPage = "/payment_success";
+  static const String paymentCancelPage = "/payment_cancel";
 }
