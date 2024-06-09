@@ -6,7 +6,6 @@ import 'package:partner_app/constant/constant.dart';
 import 'package:partner_app/cubit/clean_detail/clean_detail_cubit.dart';
 import 'package:partner_app/cubit/clean_detail/clean_detail_state.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
-import 'package:partner_app/data/model/clean_task_model.dart';
 // import 'package:partner_app/route/app_route.dart';
 
 class CleanDetailPage extends StatefulWidget {
@@ -470,6 +469,32 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
                         child: const Center(
                           child: Text(
                             'Huỷ đơn',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    // if (cleanDetailCubit.cleanModel!.date!.day ==
+                    //     DateTime.now().day)
+                    ElevatedButton(
+                        onPressed: () {
+                          homePageCubit.createPaymentLinkCleanModel(
+                              cleanDetailCubit.cleanModel!);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey.shade200,
+                          overlayColor: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Thanh toán onl',
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.green,

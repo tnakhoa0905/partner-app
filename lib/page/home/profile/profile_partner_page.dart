@@ -4,7 +4,6 @@ import 'package:partner_app/constant/constant.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_state.dart';
 import 'package:partner_app/cubit/profile/profile_cubit.dart';
-import 'package:partner_app/cubit/setting/setting_cubit.dart';
 import 'package:partner_app/route/app_route.dart';
 
 class ProfilePartnerPage extends StatefulWidget {

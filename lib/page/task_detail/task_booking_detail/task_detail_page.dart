@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:partner_app/constant/constant.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
 import 'package:partner_app/cubit/task_detail/task_detail_cubit.dart';
 import 'package:partner_app/cubit/task_detail/task_detail_state.dart';
-import 'package:partner_app/data/model/task_booking_model.dart';
 // import 'package:partner_app/route/app_route.dart';
 
 class TaskBookingDetailPage extends StatefulWidget {
@@ -78,6 +75,9 @@ class _TaskBookingDetailPageState extends State<TaskBookingDetailPage> {
                 listener: (context, state) {},
                 builder: (context, state) {
                   if (state is TaskBookingDetailLoaded) {
+                    if (taskBookingDetailCubit.taskBookingModel == null) {
+                      return SizedBox();
+                    }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

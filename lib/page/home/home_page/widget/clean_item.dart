@@ -74,7 +74,7 @@ class _CleanItemState extends State<CleanItem> {
                       ),
                       Expanded(
                           child: Text(
-                              'Thứ năm, ${DateFormat('yyyy-MM-dd').format(widget.item.date!)}'))
+                              '${AppConstant.getWeekDay(widget.item.date!.weekday)}, ${DateFormat('yyyy-MM-dd').format(widget.item.date!)}'))
                     ],
                   ),
                   const SizedBox(

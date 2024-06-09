@@ -1,12 +1,10 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:partner_app/constant/constant.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
 import 'package:partner_app/data/notifications_services.dart';
 import 'package:partner_app/page/home/home_page/home_partner_page.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:partner_app/page/home/message/message_partner_page.dart';
 import 'package:partner_app/page/home/profile/profile_partner_page.dart';
 import 'package:partner_app/page/home/welfare/welfare_partner_page.dart';
@@ -85,6 +83,7 @@ class _HomePartnerPageState extends State<HomePartner> {
 
         print("asdsadsjdkfhadjfhlkadjkadhfkljsdahfkjldhkjf");
         // Set up the `onLink` event listener next as it may be received here
+        // ignore: unnecessary_null_comparison
         if (pendingDynamicLinkData != null) {
           final Uri deepLink = pendingDynamicLinkData.link;
           print("onLink${deepLink.path}");

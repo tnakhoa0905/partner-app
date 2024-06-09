@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:partner_app/components/back_ground.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class WeekReportPartnerPage extends StatefulWidget {

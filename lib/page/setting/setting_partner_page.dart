@@ -4,7 +4,6 @@ import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:partner_app/cubit/profile/profile_cubit.dart';
 import 'package:partner_app/cubit/setting/setting_cubit.dart';
 
 class SettingPartnerPage extends StatefulWidget {
@@ -161,24 +160,26 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                             const SizedBox(
                               height: 24,
                             ),
-                            SizedBox(
-                              height: 60,
-                              width: MediaQuery.sizeOf(context).width,
-                              child: ElevatedButton(
-                                  onPressed: () =>
-                                      settingPageCubit.updateFreeTime(context),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF4151b1),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
+                            if (settingPageCubit.usermodel!.freetime!.isEmpty)
+                              SizedBox(
+                                height: 60,
+                                width: MediaQuery.sizeOf(context).width,
+                                child: ElevatedButton(
+                                    onPressed: () => settingPageCubit
+                                        .updateFreeTime(context),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF4151b1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
                                     ),
-                                  ),
-                                  child: const Text(
-                                    'Đăng ký',
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.white),
-                                  )),
-                            ),
+                                    child: const Text(
+                                      'Đăng ký',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.white),
+                                    )),
+                              ),
                           ],
                         ),
                       )

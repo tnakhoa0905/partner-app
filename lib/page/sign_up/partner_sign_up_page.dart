@@ -19,6 +19,7 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
     // TODO: implement initState
     super.initState();
     signInPartnerCubit = BlocProvider.of<SignInPartnerCubit>(context);
+    BlocProvider.of<SignInPartnerCubit>(context).initSignUp(context);
   }
 
   @override
@@ -27,7 +28,7 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
       body: BackGround(
         child: SafeArea(
             child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -106,7 +107,7 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
                       ),
                       TextField(
                         controller: signInPartnerCubit.fullNameController,
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         cursorColor: Colors.grey.shade300,
                         decoration: InputDecoration(
                           fillColor: Colors.grey.shade300,

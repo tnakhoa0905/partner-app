@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:partner_app/constant/constant.dart';
+import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
+import 'package:partner_app/cubit/home/home_page/home_page_state.dart';
+import 'package:partner_app/route/app_route.dart';
 
 class FinancePartnerPage extends StatefulWidget {
   const FinancePartnerPage({super.key});
@@ -11,9 +16,11 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
     with TickerProviderStateMixin {
   late final TabController _tabController;
   List<String> listActivity = ['Đã đặt', 'Xác nhận', 'Đã giao'];
+  late HomePageCubit homePageCubit;
   @override
   void initState() {
     super.initState();
+    homePageCubit = BlocProvider.of<HomePageCubit>(context);
     _tabController = TabController(length: 2, vsync: this);
   }
 
@@ -72,7 +79,7 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
                       ),
                     ),
                     const Text(
-                      'Tai chinh',
+                      'Tài chính',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 24,
@@ -106,18 +113,33 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             const Text(
-                              'Tai khoan chinh',
+                              'Tài khoản chính',
                               style: TextStyle(
                                   // color: Colors.white,
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold),
                             ),
-                            const Text(
-                              '0d',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold),
+                            BlocConsumer<HomePageCubit, HomePageState>(
+                              listener: (context, state) {},
+                              builder: (context, state) {
+                                if (state is HomePageLoaded) {
+                                  return Text(
+                                    "${AppConstant.oCcy.format(homePageCubit.usermodel!.balance!)} đ",
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold),
+                                  );
+                                }
+                                return const Text(
+                                  '0d',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                );
+                              },
+                              bloc: homePageCubit,
                             ),
                             Padding(
                               padding:
@@ -139,7 +161,7 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
                                           child: const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                            children: [Text('Nap tien')],
+                                            children: [Text('Nạp tiền')],
                                           )),
                                     ),
                                   ),
@@ -150,7 +172,9 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
                                     child: SizedBox(
                                       height: 40,
                                       child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () => Navigator.pushNamed(
+                                              context,
+                                              AppRouteUser.withdrawalsPage),
                                           style: ElevatedButton.styleFrom(
                                               padding: const EdgeInsets.all(0),
                                               backgroundColor:
@@ -159,7 +183,7 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
                                           child: const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                            children: [Text('Rut tien')],
+                                            children: [Text('Rút tiền')],
                                           )),
                                     ),
                                   )
@@ -167,7 +191,7 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
                               ),
                             ),
                             const Text(
-                              'Tai khoan khuyen mai: 0d',
+                              'Tài khoản khuyến mãi: 0đ',
                               style: TextStyle(
                                   color: Color(0xFF4151b1),
                                   fontSize: 24,

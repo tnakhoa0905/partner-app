@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:partner_app/constant/constant.dart';
-import 'package:partner_app/data/model/task_booking_model.dart';
+import 'package:partner_app/data/model/permanent_model.dart';
 import 'package:partner_app/route/app_route.dart';
 
-class TaskBookingItem extends StatefulWidget {
-  const TaskBookingItem({
-    super.key,
-    required this.item,
-  });
-  final TaskBookingModel item;
-
+class PermanentHistoryItem extends StatefulWidget {
+  const PermanentHistoryItem({super.key, required this.item});
+  final PermanentModel item;
   @override
-  State<TaskBookingItem> createState() => _TaskBookingItemState();
+  State<PermanentHistoryItem> createState() => _PermanentHistoryItemState();
 }
 
-class _TaskBookingItemState extends State<TaskBookingItem> {
+class _PermanentHistoryItemState extends State<PermanentHistoryItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print(widget.item);
-        Navigator.pushNamed(context, AppRouteUser.taskBookingDetail,
-            arguments: widget.item.id);
+        Navigator.pushNamed(context, AppRouteUser.permanentHistoryDetail,
+            arguments: widget.item);
       },
       child: Container(
-        margin: EdgeInsets.only(top: 16, bottom: 16),
+        margin: const EdgeInsets.only(top: 16),
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: Colors.grey.shade300),
@@ -38,8 +33,8 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Dọn dẹp nhà",
-                      style: TextStyle(
+                  Text(widget.item.taskId!.name!,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       )),
                   Container(
@@ -48,13 +43,11 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
                         borderRadius: BorderRadius.circular(16),
                         color: Colors.greenAccent.withOpacity(0.5)),
                     child: Text(
-                      widget.item.status == 1
-                          ? 'Đã nhận đơn'
-                          : widget.item.status == 2
-                              ? 'Đã hoàn thành'
-                              : widget.item.status == 3
-                                  ? "Người làm huỷ"
-                                  : "Khách hàng huỷ",
+                      widget.item.status == 0
+                          ? 'Đang chờ'
+                          : widget.item.status == 1
+                              ? 'Đã nhận đơn'
+                              : 'Đã hoàn thành',
                       style:
                           TextStyle(color: Colors.green.shade600, fontSize: 11),
                     ),
@@ -71,17 +64,18 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
               child: Column(
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Icon(
                         Icons.task,
-                        color: Color(0xFF4151b1),
+                        color: Color(0xfff6852c),
                       ),
                       const SizedBox(
                         width: 12,
                       ),
                       Expanded(
                           child: Text(
-                              '${AppConstant.getWeekDay(widget.item.date!.weekday)}, ${DateFormat('yyyy-MM-dd').format(widget.item.date!)}'))
+                              'Thứ năm, ${DateFormat('dd-MM-yyyy').format(widget.item.date![0])} - thứ sáu, ${DateFormat('dd-MM-yyyy').format(widget.item.date![widget.item.date!.length - 1])}'))
                     ],
                   ),
                   const SizedBox(
@@ -91,7 +85,7 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
                     children: [
                       const Icon(
                         Icons.check_circle_outline,
-                        color: Color(0xFF4151b1),
+                        color: Color(0xfff6852c),
                       ),
                       const SizedBox(
                         width: 12,
@@ -108,7 +102,7 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
                     children: [
                       const Icon(
                         Icons.monetization_on_outlined,
-                        color: Color(0xFF4151b1),
+                        color: Color(0xfff6852c),
                       ),
                       const SizedBox(
                         width: 12,
@@ -126,7 +120,7 @@ class _TaskBookingItemState extends State<TaskBookingItem> {
                     children: [
                       const Icon(
                         Icons.place_outlined,
-                        color: Color(0xFF4151b1),
+                        color: Color(0xfff6852c),
                       ),
                       const SizedBox(
                         width: 12,

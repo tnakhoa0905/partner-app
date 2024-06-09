@@ -1,8 +1,8 @@
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
+import 'package:partner_app/cubit/task_detail/task_detail_cubit.dart';
 import 'package:partner_app/route/app_route.dart';
 
 class PaymentSuccessPage extends StatefulWidget {
@@ -14,19 +14,13 @@ class PaymentSuccessPage extends StatefulWidget {
 
 class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
   late HomePageCubit homePageCubit;
+  late TaskBookingDetailCubit taskBookingDetailCubit;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     homePageCubit = BlocProvider.of<HomePageCubit>(context);
-    // homePageCubit.socket.emit('partner_done_task', {
-    //   "userId": taskerId,
-    //   "note": "Taker donetask",
-    //   "data": {
-    //     "type": taskBookingModel != null ? "taskBooking" : "clean",
-    //     "_id": taskBookingModel != null ? taskBookingModel.id : cleanModel?.id
-    //   }
-    // });
+    taskBookingDetailCubit = BlocProvider.of<TaskBookingDetailCubit>(context);
   }
 
   @override
@@ -60,6 +54,14 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
               width: MediaQuery.sizeOf(context).width * 0.7,
               child: ElevatedButton(
                   onPressed: () {
+                    homePageCubit.socket.emit('partner_done_task', {
+                      "userId": taskBookingDetailCubit.taskBookingModel!.userId,
+                      "note": "Taker donetask",
+                      "data": {
+                        "type": "taskBooking",
+                        "_id": taskBookingDetailCubit.taskBookingModel!.id
+                      }
+                    });
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       AppRouteUser.homePartner,
