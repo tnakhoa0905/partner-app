@@ -104,6 +104,26 @@ class AppConstant {
     }
     return money * combo * sumListJob;
   }
+
+  static String getWeekDay(int weekDay) {
+    switch (weekDay) {
+      case 1:
+        return "Thứ Hai";
+      case 2:
+        return "Thứ Ba";
+      case 3:
+        return "Thứ Tư";
+      case 4:
+        return "Thứ Năm";
+      case 5:
+        return "Thứ Sáu";
+      case 6:
+        return "Thứ Bảy";
+      default:
+        return "Chủ Nhật";
+    }
+    // return "Thứ 2";
+  }
 }
 
 class ThemeApp {
@@ -126,6 +146,7 @@ class UrlApiAppUser {
   static const getUser = "${host}users/get_user_profile";
   static const updateProfile = "${host}users/update_profile";
   static const logOut = "${host}users/logout";
+  static const updateLocation = "${host}users/update_profile";
   //
   static const getTaskById = "${host}taskbookings/get_taskbooking_by_id";
   static const getWaitingJob = "${host}users/partner_waiting_task";
@@ -135,6 +156,8 @@ class UrlApiAppUser {
   static const updateFreeTime = "${host}users/partner_update_freetime";
   static const createPayment = "${host}payments/create_payment_link";
   static const getCleanById = "${host}cleanbookings/get_cleanbooking_by_id";
-
+  static const ratingTaskBooking = "${host}ratings/create_taskbooking_rating";
+  static const getRatingTaskBooking =
+      "${host}ratings/get_task_booking_by_id_and_user_id";
   //
 }

@@ -19,6 +19,12 @@ abstract class UserRepository {
       required String fullName,
       required String token});
   Future<bool> logOut({required String userId, required String token});
+  Future<bool> updateLocation({
+    required String userId,
+    required String token,
+    required double lat,
+    required double lng,
+  });
 }
 
 class UserRepositoryImplement extends UserRepository {
@@ -146,6 +152,39 @@ class UserRepositoryImplement extends UserRepository {
           },
           body: jsonEncode({
             "userId": userId,
+          }));
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print('ccccc');
+        print(jsonDecode(response.body)["data"]);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<bool> updateLocation(
+      {required String userId,
+      required String token,
+      required double lat,
+      required double lng}) async {
+    // TODO: implement updateLocation
+    try {
+      print('go go');
+      print(userId);
+      final response = await http.post(Uri.parse(UrlApiAppUser.updateLocation),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({
+            "userInfo": {
+              "_id": userId,
+              "location": {"lat": lat, "lng": lng}
+            }
           }));
       print(response.statusCode);
       if (response.statusCode == 200) {

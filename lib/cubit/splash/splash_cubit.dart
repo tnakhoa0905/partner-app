@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/splash/splash_state.dart';
 import 'package:partner_app/data/hive_service.dart';
-import 'package:partner_app/data/model/user_model.dart';
 import 'package:partner_app/route/app_route.dart';
 
 class SplashCubit extends Cubit<SplashState> {

@@ -30,7 +30,16 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
     }
   }
 
+  initSignUp(context) async {
+    phoneNumberController.clear();
+    passwordController.clear();
+    emailController.clear();
+    fullNameController.clear();
+    emit(SignInPartnerLoaded());
+  }
+
   Future<void> login(BuildContext context) async {
+    print("object");
     try {
       emit(SignInPartnerInitial());
       print(userName.text);

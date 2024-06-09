@@ -3,6 +3,8 @@ import 'package:partner_app/data/model/clean_task_model.dart';
 import 'package:partner_app/data/model/task_booking_model.dart';
 import 'package:partner_app/page/edit_profile/edit_profile_page.dart';
 import 'package:partner_app/page/finance/finance_partner_page.dart';
+import 'package:partner_app/page/home/home_page/detail_home_page/clean_detail.dart';
+import 'package:partner_app/page/home/home_page/detail_home_page/task_detail_page.dart';
 import 'package:partner_app/page/home/home_partner.dart';
 import 'package:partner_app/page/income_history/income_history_partner_page.dart';
 import 'package:partner_app/page/payment/cancel_payment_page.dart';
@@ -16,6 +18,7 @@ import 'package:partner_app/page/support/support_partner_page.dart';
 import 'package:partner_app/page/task_detail/clean_detail/clean_detail.dart';
 import 'package:partner_app/page/task_detail/task_booking_detail/task_detail_page.dart';
 import 'package:partner_app/page/week_report/week_report_partner_page.dart';
+import 'package:partner_app/page/withdrawals/withdrawals_page.dart';
 
 class RouteGenerate {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -45,9 +48,17 @@ class RouteGenerate {
           String taskId = args as String;
           return MaterialPageRoute(
               builder: (context) => TaskBookingDetailPage(
-                    taskId: "taskId",
+                    taskId: taskId,
                   ));
         }
+      case (AppRouteUser.cleanHistoryDetail):
+        return MaterialPageRoute(
+            builder: ((context) =>
+                CleanDetailHistoryPage(cleanModel: args as CleanModel)));
+      case (AppRouteUser.taskBookingHistoryDetail):
+        return MaterialPageRoute(
+            builder: ((context) => TaskBookingDetailHistoryPage(
+                taskBookingModel: args as TaskBookingModel)));
       case (AppRouteUser.finance):
         return MaterialPageRoute(
             builder: ((context) => const FinancePartnerPage()));
@@ -77,6 +88,9 @@ class RouteGenerate {
       case (AppRouteUser.paymentCancelPage):
         return MaterialPageRoute(
             builder: ((context) => const CancelPaymentPage()));
+      case (AppRouteUser.withdrawalsPage):
+        return MaterialPageRoute(
+            builder: ((context) => const WithdrawalsPage()));
 
       default:
         return errorRoute();
@@ -125,4 +139,9 @@ class AppRouteUser {
   static const String paymentPage = "/payment";
   static const String paymentSuccessPage = "/payment_success";
   static const String paymentCancelPage = "/payment_cancel";
+  static const String withdrawalsPage = "/withdrawals_page";
+  //history
+  static const String taskBookingHistoryDetail = "/task_booking_history_detail";
+  static const String cleanHistoryDetail = "/clean_history_detail";
+  static const String permanentHistoryDetail = "/permanent_history_detail";
 }

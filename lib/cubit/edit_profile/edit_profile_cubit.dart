@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/edit_profile/edit_profile_state.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
-import 'package:partner_app/cubit/profile/profile_cubit.dart';
 import 'package:partner_app/data/hive_service.dart';
 import 'package:partner_app/data/model/user_model.dart';
 import 'package:partner_app/data/repository/user_repo.dart';

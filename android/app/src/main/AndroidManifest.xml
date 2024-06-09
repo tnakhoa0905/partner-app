@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <application
         android:label="Partner App"
         android:name="${applicationName}"
@@ -6,7 +10,7 @@
         android:allowBackup="false">
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver" />
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyDbgcr8FdOFlTQ19qsdiWV10ixTVYFQ1cw"/>
+               android:value="AIzaSyDcICztjh3Llgg_ynAebk0Ns9berOtO-xA"/>
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
                 android:value="high_importance_channel" />

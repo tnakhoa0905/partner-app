@@ -478,29 +478,29 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
                     const SizedBox(
                       height: 8,
                     ),
-                    // if (cleanDetailCubit.cleanModel!.date!.day ==
-                    //     DateTime.now().day)
-                    ElevatedButton(
-                        onPressed: () {
-                          homePageCubit.createPaymentLinkCleanModel(
-                              cleanDetailCubit.cleanModel!);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey.shade200,
-                          overlayColor: Colors.grey,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                    if (cleanDetailCubit.cleanModel!.date!.day ==
+                        DateTime.now().day)
+                      ElevatedButton(
+                          onPressed: () {
+                            homePageCubit.createPaymentLinkCleanModel(
+                                cleanDetailCubit.cleanModel!);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey.shade200,
+                            overlayColor: Colors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Thanh toán onl',
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ))
+                          child: const Center(
+                            child: Text(
+                              'Thanh toán onl',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ))
                   ],
                 );
               }

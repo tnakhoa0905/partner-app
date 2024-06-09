@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_state.dart';
 import 'package:partner_app/data/hive_service.dart';
 import 'package:partner_app/data/model/clean_task_model.dart';
@@ -26,6 +28,8 @@ class HomePageCubit extends Cubit<HomePageState> {
   TaskBookingRepo taskBookingRepo = TaskBookingRepoImplement();
   UserRepository userRepository = UserRepositoryImplement();
   User? usermodel;
+  List<dynamic> combinedList = [];
+  List<dynamic> combinedListDone = [];
   late IO.Socket socket;
   init() async {
     print('go');
@@ -37,6 +41,7 @@ class HomePageCubit extends Cubit<HomePageState> {
     String token = (await _hiveService.getBox("token", 'userModel'))!;
     usermodel = await userRepository.getUser(idUser, token);
     initSocket(idUser);
+    getCurrentGeolocator();
     if (usermodel!.level! > 1) {
       try {
         final response = await taskBookingRepo.getWaitingTask(idUser, token);
@@ -51,7 +56,9 @@ class HomePageCubit extends Cubit<HomePageState> {
           }
           listTaskBooking = listTaskBookingResult;
           listClean = listCleanResult;
-          print(listClean);
+          List<dynamic> combinedListResult = [...listTaskBooking, ...listClean];
+          combinedListResult.sort((a, b) => a.date.compareTo(b.date));
+          combinedList = combinedListResult;
         }
         final responseDone = await taskBookingRepo.getDoneTask(idUser, token);
         if (responseDone != null) {
@@ -66,6 +73,12 @@ class HomePageCubit extends Cubit<HomePageState> {
           }
           listTaskBookingDone = listTaskBookingDoneResult;
           listCleanDone = listCleanDoneResult;
+          List<dynamic> combinedListResultDone = [
+            ...listTaskBooking,
+            ...listClean
+          ];
+          combinedListResultDone.sort((a, b) => a.date.compareTo(b.date));
+          combinedListDone = combinedListResultDone;
         }
         emit(HomePageLoaded());
       } catch (e) {
@@ -74,6 +87,32 @@ class HomePageCubit extends Cubit<HomePageState> {
     } else {
       emit(HomePageLoaded());
     }
+  }
+
+  void getCurrentGeolocator() async {
+    String idUser = (await _hiveService.getBox("id", 'userModel'))!;
+    String token = (await _hiveService.getBox("token", 'userModel'))!;
+    Position position = await determinePosition();
+    print(Geolocator.distanceBetween(position.latitude, position.longitude,
+        16.463264092079807, 107.58998684300418));
+    bool result = await userRepository.updateLocation(
+        userId: idUser,
+        token: token,
+        lat: position.latitude,
+        lng: position.longitude);
+    print(result);
+  }
+
+  Future<Position> determinePosition() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error("Local permisstion are denied");
+      }
+    }
+    return Geolocator.getCurrentPosition();
   }
 
   getList() async {
@@ -117,7 +156,9 @@ class HomePageCubit extends Cubit<HomePageState> {
     }
   }
 
-  initSocket(String userId) async {
+  initSocket(
+    String userId,
+  ) async {
     socket = IO.io(
         'https://apitasks.pdteam.net/',
         IO.OptionBuilder()
@@ -126,7 +167,8 @@ class HomePageCubit extends Cubit<HomePageState> {
               {
                 "user": jsonEncode({
                   'userId': userId,
-                })
+                }),
+                "citySettingModelId": "663f40875bc3c16fac4fa60f"
               },
             )
             .enableAutoConnect()
@@ -197,11 +239,15 @@ class HomePageCubit extends Cubit<HomePageState> {
   createPaymentLink(TaskBookingModel taskBookingModel) async {
     String? launchUr =
         await taskBookingRepo.createPaymentLink(taskBookingModel);
-
     if (launchUr != null) {
       launchUrl(Uri.parse(launchUr), mode: LaunchMode.externalApplication);
     }
-    // launchUrl(Uri.parse("https://partnerapppdtech.page.link/home_partner"));
-    //
+  }
+
+  createPaymentLinkCleanModel(CleanModel cleanModel) async {
+    String? launchUr = await taskBookingRepo.createPaymentLinkClean(cleanModel);
+    if (launchUr != null) {
+      launchUrl(Uri.parse(launchUr), mode: LaunchMode.externalApplication);
+    }
   }
 }

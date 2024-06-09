@@ -1,5 +1,4 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:partner_app/data/model/user_model.dart';
 part 'hive_service.g.dart';
 
 @HiveType(typeId: 1)

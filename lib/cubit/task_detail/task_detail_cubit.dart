@@ -14,6 +14,7 @@ class TaskBookingDetailCubit extends Cubit<TaskBookingDetailState> {
   init(String taskId) async {
     String token = (await _hiveService.getBox("token", 'userModel'))!;
     taskBookingModel = await taskBookingRepo.getTaskBookingById(taskId, token);
+    print("taskBookingModel");
     print(taskBookingModel);
     emit(TaskBookingDetailLoaded());
   }
