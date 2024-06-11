@@ -75,7 +75,7 @@ String createCleanModelToJson(CreateCleanModel data) =>
     json.encode(data.toJson());
 
 class CleanModel {
-  List<TaskerId>? taskerIdArr;
+  TaskerId? taskerId;
   String? id;
   UserId? userId;
   CleanId? cleanId;
@@ -86,24 +86,25 @@ class CleanModel {
   DateTime? date;
   bool? isPaid;
   int? cleanModelId;
+  int? type;
   int? v;
 
-  CleanModel({
-    this.taskerIdArr,
-    this.id,
-    this.userId,
-    this.cleanId,
-    this.status,
-    this.companyId,
-    this.price,
-    this.time,
-    this.date,
-    this.isPaid,
-    this.cleanModelId,
-    this.v,
-  });
+  CleanModel(
+      {this.taskerId,
+      this.id,
+      this.userId,
+      this.cleanId,
+      this.status,
+      this.companyId,
+      this.price,
+      this.time,
+      this.date,
+      this.isPaid,
+      this.cleanModelId,
+      this.v,
+      this.type = 1});
   CleanModel copyWith({
-    List<TaskerId>? taskerIdArr,
+    TaskerId? taskerId,
     String? id,
     UserId? userId,
     CleanId? cleanId,
@@ -115,46 +116,42 @@ class CleanModel {
     bool? isPaid,
     int? cleanModelId,
     int? v,
+    int? type,
   }) =>
       CleanModel(
-        taskerIdArr: taskerIdArr ?? this.taskerIdArr,
-        id: id ?? this.id,
-        userId: userId ?? this.userId,
-        cleanId: cleanId ?? this.cleanId,
-        status: status ?? this.status,
-        companyId: companyId ?? this.companyId,
-        price: price ?? this.price,
-        time: time ?? this.time,
-        date: date ?? this.date,
-        isPaid: isPaid ?? this.isPaid,
-        cleanModelId: cleanModelId ?? this.cleanModelId,
-        v: v ?? this.v,
-      );
+          taskerId: taskerId ?? this.taskerId,
+          id: id ?? this.id,
+          userId: userId ?? this.userId,
+          cleanId: cleanId ?? this.cleanId,
+          status: status ?? this.status,
+          companyId: companyId ?? this.companyId,
+          price: price ?? this.price,
+          time: time ?? this.time,
+          date: date ?? this.date,
+          isPaid: isPaid ?? this.isPaid,
+          cleanModelId: cleanModelId ?? this.cleanModelId,
+          v: v ?? this.v,
+          type: type ?? 1);
 
   factory CleanModel.fromJson(Map<String, dynamic> json) => CleanModel(
-        taskerIdArr: json["taskerIdArr"] == null
-            ? []
-            : List<TaskerId>.from(
-                json["taskerIdArr"]!.map((x) => TaskerId.fromJson(x))),
-        id: json["_id"],
-        userId:
-            json["userId"] == null ? null : UserId.fromJson(json["cleanId"]),
-        cleanId:
-            json["cleanId"] == null ? null : CleanId.fromJson(json["cleanId"]),
-        status: json["status"],
-        companyId: json["companyId"],
-        price: json["price"],
-        time: json["time"],
-        date: json["date"] == null ? null : DateTime.parse(json["date"]),
-        isPaid: json["isPaid"],
-        cleanModelId: json["id"],
-        v: json["__v"],
-      );
+      taskerId:
+          json["taskerId"] == null ? null : TaskerId.fromJson(json["taskerId"]),
+      id: json["_id"],
+      userId: json["userId"] == null ? null : UserId.fromJson(json["cleanId"]),
+      cleanId:
+          json["cleanId"] == null ? null : CleanId.fromJson(json["cleanId"]),
+      status: json["status"],
+      companyId: json["companyId"],
+      price: json["price"],
+      time: json["time"],
+      date: json["date"] == null ? null : DateTime.parse(json["date"]),
+      isPaid: json["isPaid"],
+      cleanModelId: json["id"],
+      v: json["__v"],
+      type: json["type"] ?? 1);
 
   Map<String, dynamic> toJson() => {
-        "taskerIdArr": taskerIdArr == null
-            ? []
-            : List<dynamic>.from(taskerIdArr!.map((x) => x)),
+        "taskerId": taskerId?.toJson(),
         "_id": id,
         "userId": userId,
         "cleanId": cleanId?.toJson(),
@@ -166,6 +163,7 @@ class CleanModel {
         "isPaid": isPaid,
         "id": cleanModelId,
         "__v": v,
+        "type": type
       };
 }
 

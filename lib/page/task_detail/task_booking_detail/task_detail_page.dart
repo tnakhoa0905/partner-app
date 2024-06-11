@@ -463,45 +463,45 @@ class _TaskBookingDetailPageState extends State<TaskBookingDetailPage> {
                         const SizedBox(
                           height: 24,
                         ),
-                        if (taskBookingDetailCubit
-                                .taskBookingModel!.date!.day ==
-                            DateTime.now().day)
-                          ElevatedButton(
-                              onPressed: () {
-                                homePageCubit.completeTask(
-                                    context: context,
-                                    taskId: taskBookingDetailCubit
-                                        .taskBookingModel!.id!,
-                                    taskBookingModel: taskBookingDetailCubit
-                                        .taskBookingModel);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                overlayColor: Colors.grey,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
+                        // if (taskBookingDetailCubit
+                        //         .taskBookingModel!.date!.day ==
+                        // DateTime.now().day)
+                        ElevatedButton(
+                            onPressed: () {
+                              homePageCubit.completeTaskBooking(
+                                  context: context,
+                                  taskId: taskBookingDetailCubit
+                                      .taskBookingModel!.id!,
+                                  taskBookingModel:
+                                      taskBookingDetailCubit.taskBookingModel!);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              overlayColor: Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              child: const Center(
-                                child: Text(
-                                  'Hoàn thành',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Hoàn thành',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )),
                         const SizedBox(
                           height: 8,
                         ),
                         ElevatedButton(
                             onPressed: () {
-                              homePageCubit.cancelTask(
+                              homePageCubit.cancelTaskBooking(
                                   context: context,
                                   taskId: taskBookingDetailCubit
                                       .taskBookingModel!.id!,
                                   taskBookingModel:
-                                      taskBookingDetailCubit.taskBookingModel);
+                                      taskBookingDetailCubit.taskBookingModel!);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.grey.shade200,
@@ -519,30 +519,30 @@ class _TaskBookingDetailPageState extends State<TaskBookingDetailPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                             )),
-                        if (taskBookingDetailCubit
-                                .taskBookingModel!.date!.day ==
-                            DateTime.now().day)
-                          ElevatedButton(
-                              onPressed: () {
-                                homePageCubit.createPaymentLink(
-                                    taskBookingDetailCubit.taskBookingModel!);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.grey.shade200,
-                                overlayColor: Colors.grey,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
+                        // if (taskBookingDetailCubit
+                        //         .taskBookingModel!.date!.day ==
+                        //     DateTime.now().day)
+                        ElevatedButton(
+                            onPressed: () {
+                              homePageCubit.createPaymentLink(
+                                  taskBookingDetailCubit.taskBookingModel!);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey.shade200,
+                              overlayColor: Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              child: const Center(
-                                child: Text(
-                                  'Thanh toán onl',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ))
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Thanh toán onl',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ))
                       ],
                     );
                   }

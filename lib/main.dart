@@ -9,6 +9,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:partner_app/constant/constant.dart';
 import 'package:partner_app/cubit/clean_detail/clean_detail_state.dart';
 import 'package:partner_app/cubit/edit_profile/edit_profile_cubit.dart';
+import 'package:partner_app/cubit/home/history_detail/clean_booking/clean_history_cubit.dart';
 import 'package:partner_app/cubit/home/history_detail/task_booking/task_booking_history_cubit.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
 import 'package:partner_app/cubit/profile/profile_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:partner_app/cubit/setting/setting_cubit.dart';
 import 'package:partner_app/cubit/sign_in/sign_in_cubit.dart';
 import 'package:partner_app/cubit/splash/splash_cubit.dart';
 import 'package:partner_app/cubit/task_detail/task_detail_cubit.dart';
+import 'package:partner_app/cubit/withdrawals/withdrawal_page.dart';
 import 'package:partner_app/data/fcm_api.dart';
 import 'package:partner_app/data/hive_service.dart';
 import 'package:partner_app/firebase_options.dart';
@@ -88,6 +90,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<CleanDetailCubit>(create: (context) => CleanDetailCubit()),
         BlocProvider<TaskBookingHistoryCubit>(
             create: (context) => TaskBookingHistoryCubit()),
+        BlocProvider<CleanHistoryCubit>(
+            create: (context) => CleanHistoryCubit()),
+        BlocProvider<WithDrawalCubit>(create: (context) => WithDrawalCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

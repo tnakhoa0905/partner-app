@@ -10,6 +10,7 @@ import 'package:partner_app/data/model/clean_task_model.dart';
 import 'package:partner_app/data/model/permanent_model.dart';
 import 'package:partner_app/data/model/task_booking_model.dart';
 import 'package:partner_app/data/model/user_model.dart';
+import 'package:partner_app/data/repository/clean_task_repo.dart';
 import 'package:partner_app/data/repository/task_booking_repo.dart';
 import 'package:partner_app/data/repository/user_repo.dart';
 import 'package:partner_app/route/app_route.dart';
@@ -26,6 +27,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   List<PermanentModel> listPermanentDone = [];
   List<CleanModel> listCleanDone = [];
   TaskBookingRepo taskBookingRepo = TaskBookingRepoImplement();
+  CleanTaskRepository cleanTaskRepository = CleanTaskRepositoryImplement();
   UserRepository userRepository = UserRepositoryImplement();
   User? usermodel;
   List<dynamic> combinedList = [];
@@ -74,8 +76,8 @@ class HomePageCubit extends Cubit<HomePageState> {
           listTaskBookingDone = listTaskBookingDoneResult;
           listCleanDone = listCleanDoneResult;
           List<dynamic> combinedListResultDone = [
-            ...listTaskBooking,
-            ...listClean
+            ...listTaskBookingDone,
+            ...listCleanDone
           ];
           combinedListResultDone.sort((a, b) => a.date.compareTo(b.date));
           combinedListDone = combinedListResultDone;
@@ -182,24 +184,21 @@ class HomePageCubit extends Cubit<HomePageState> {
     socket.connect();
   }
 
-  completeTask(
-      {required BuildContext context,
-      required String taskId,
-      TaskBookingModel? taskBookingModel,
-      CleanModel? cleanModel}) async {
+  completeTaskBooking({
+    required BuildContext context,
+    required String taskId,
+    required TaskBookingModel taskBookingModel,
+  }) async {
     String taskerId = (await _hiveService.getBox("id", 'userModel'))!;
     String token = (await _hiveService.getBox("token", 'userModel'))!;
-    bool result = await taskBookingRepo.completeTask(taskerId, taskId, token);
+    bool result = await taskBookingRepo.completeTask(
+        taskerId, taskBookingModel.id!, token);
     if (result) {
       socket.emit('partner_done_task', {
-        "userId": taskBookingModel != null
-            ? taskBookingModel.userId
-            : cleanModel?.userId,
+        "userId": taskBookingModel.userId!,
         "note": "Taker donetask",
-        "data": {
-          "type": taskBookingModel != null ? "taskBooking" : "clean",
-          "_id": taskBookingModel != null ? taskBookingModel.id : cleanModel?.id
-        }
+        "type": "taskBooking",
+        "_id": taskBookingModel.id
       });
       Navigator.pushNamedAndRemoveUntil(
           context, AppRouteUser.homePartner, (Route<dynamic> route) => false);
@@ -208,25 +207,66 @@ class HomePageCubit extends Cubit<HomePageState> {
     }
   }
 
-  cancelTask(
-      {required BuildContext context,
-      required String taskId,
-      TaskBookingModel? taskBookingModel,
-      CleanModel? cleanModel}) async {
+  cancelTaskBooking({
+    required BuildContext context,
+    required String taskId,
+    required TaskBookingModel taskBookingModel,
+  }) async {
     String taskerId = (await _hiveService.getBox("id", 'userModel'))!;
     String token = (await _hiveService.getBox("token", 'userModel'))!;
     bool result = await taskBookingRepo.cancelTask(taskerId, taskId, token);
     if (result) {
       socket.emit('partner_cancel_task', {
         "note": "Taker donetask",
-        "data": {
-          "type": taskBookingModel != null ? "taskBooking" : "clean",
-          "_id":
-              taskBookingModel != null ? taskBookingModel.id : cleanModel?.id,
-          "userId": taskBookingModel != null
-              ? taskBookingModel.userId
-              : cleanModel?.userId,
-        }
+        "type": "taskBooking",
+        "_id": taskBookingModel.id,
+        "userId": taskBookingModel.userId
+      });
+
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRouteUser.homePartner, (Route<dynamic> route) => false);
+    } else {
+      print('error');
+    }
+  }
+
+  completeCleanBooking({
+    required BuildContext context,
+    required String taskId,
+    required CleanModel cleanModel,
+  }) async {
+    String taskerId = (await _hiveService.getBox("id", 'userModel'))!;
+    String token = (await _hiveService.getBox("token", 'userModel'))!;
+    bool result =
+        await cleanTaskRepository.completeTask(taskerId, cleanModel.id!, token);
+    if (result) {
+      socket.emit('partner_done_task', {
+        "userId": cleanModel.userId!,
+        "note": "Taker donetask",
+        "type": "cleanBooking",
+        "_id": cleanModel.id
+      });
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRouteUser.homePartner, (Route<dynamic> route) => false);
+    } else {
+      print('error');
+    }
+  }
+
+  cancelCleanBooking({
+    required BuildContext context,
+    required String taskId,
+    required CleanModel cleanModel,
+  }) async {
+    String taskerId = (await _hiveService.getBox("id", 'userModel'))!;
+    String token = (await _hiveService.getBox("token", 'userModel'))!;
+    bool result = await cleanTaskRepository.cancelTask(taskerId, taskId, token);
+    if (result) {
+      socket.emit('partner_cancel_task', {
+        "note": "Taker donetask",
+        "type": "cleanBooking",
+        "_id": cleanModel.id,
+        "userId": cleanModel.userId
       });
 
       Navigator.pushNamedAndRemoveUntil(

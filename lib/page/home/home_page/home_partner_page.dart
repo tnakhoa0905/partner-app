@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_state.dart';
@@ -134,32 +135,43 @@ class _HomePartnerPageState extends State<HomePartnerPage>
                       if (homePageCubit.usermodel!.level! > 1) {
                         return RefreshIndicator(
                             child: Container(
+                                height: MediaQuery.of(context).size.height,
                                 padding: const EdgeInsets.only(
                                   left: 16.0,
                                   right: 16,
                                 ),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      BlocConsumer<HomePageCubit,
-                                              HomePageState>(
-                                          bloc: homePageCubit,
-                                          builder: (context, state) {
-                                            return const SizedBox();
-                                          },
-                                          listener: (context, state) {}),
-                                      for (var item in homePageCubit
-                                          .combinedList.reversed)
-                                        item is CleanModel
-                                            ? CleanItem(item: item)
-                                            : TaskBookingItem(
-                                                item: item,
-                                              )
-                                    ],
-                                  ),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const AlwaysScrollableScrollPhysics(),
+                                        itemCount:
+                                            homePageCubit.combinedList.length,
+                                        itemBuilder: (context, index) {
+                                          dynamic item =
+                                              homePageCubit.combinedList[index];
+                                          return item is CleanModel
+                                              ? CleanItem(item: item)
+                                              : TaskBookingItem(
+                                                  item: item,
+                                                );
+                                        },
+                                      ),
+                                    ),
+                                    // for (var item in homePageCubit
+                                    //     .combinedList.reversed)
+                                    //   item is CleanModel
+                                    //       ? CleanItem(item: item)
+                                    //       : TaskBookingItem(
+                                    //           item: item,
+                                    //         )
+                                  ],
                                 )),
                             onRefresh: () async {
-                              return Future.delayed(Duration(seconds: 2), () {
+                              return Future.delayed(const Duration(seconds: 2),
+                                  () {
                                 homePageCubit.init();
                               });
                             });
@@ -243,20 +255,16 @@ class _HomePartnerPageState extends State<HomePartnerPage>
                       if (homePageCubit.usermodel!.level! > 1) {
                         return RefreshIndicator(
                             child: Container(
+                                height: MediaQuery.of(context).size.height,
                                 padding: const EdgeInsets.only(
                                   left: 16.0,
                                   right: 16,
                                 ),
                                 child: SingleChildScrollView(
+                                  physics:
+                                      const AlwaysScrollableScrollPhysics(),
                                   child: Column(
                                     children: [
-                                      BlocConsumer<HomePageCubit,
-                                              HomePageState>(
-                                          bloc: homePageCubit,
-                                          builder: (context, state) {
-                                            return const SizedBox();
-                                          },
-                                          listener: (context, state) {}),
                                       for (var item in homePageCubit
                                           .combinedListDone.reversed)
                                         item is CleanModel
@@ -268,7 +276,8 @@ class _HomePartnerPageState extends State<HomePartnerPage>
                                   ),
                                 )),
                             onRefresh: () async {
-                              return Future.delayed(Duration(seconds: 2), () {
+                              return Future.delayed(const Duration(seconds: 2),
+                                  () {
                                 homePageCubit.init();
                               });
                             });

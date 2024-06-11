@@ -54,14 +54,14 @@ class _PaymentSuccessPageState extends State<PaymentSuccessPage> {
               width: MediaQuery.sizeOf(context).width * 0.7,
               child: ElevatedButton(
                   onPressed: () {
-                    homePageCubit.socket.emit('partner_done_task', {
-                      "userId": taskBookingDetailCubit.taskBookingModel!.userId,
-                      "note": "Taker donetask",
-                      "data": {
-                        "type": "taskBooking",
-                        "_id": taskBookingDetailCubit.taskBookingModel!.id
-                      }
-                    });
+                    // homePageCubit.socket.emit('partner_done_task', {
+                    //   "userId": taskBookingDetailCubit.taskBookingModel!.userId,
+                    //   "note": "Taker donetask",
+                    //   "data": {
+                    //     "type": "taskBooking",
+                    //     "_id": taskBookingDetailCubit.taskBookingModel!.id
+                    //   }
+                    // });
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       AppRouteUser.homePartner,

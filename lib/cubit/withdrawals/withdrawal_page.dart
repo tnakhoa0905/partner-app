@@ -26,7 +26,8 @@ class WithDrawalCubit extends Cubit<WithDrawalState> {
     String token = (await _hiveService.getBox("token", 'userModel'))!;
     try {
       final response = await http.post(
-          Uri.parse("https://apitasks.pdteam.net/payments/create_payment_link"),
+          Uri.parse(
+              "https://apitasks.pdteam.net/withdrawals/create_withdrawal_request"),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer $token',
@@ -42,8 +43,11 @@ class WithDrawalCubit extends Cubit<WithDrawalState> {
       if (response.statusCode == 200) {
         print('ccccc');
         print(jsonDecode(response.body)["data"]);
-        // return true;
+        print(true);
+        // return;
       }
+      print(false);
+
       // return false;
     } catch (e) {
       throw Exception(e);

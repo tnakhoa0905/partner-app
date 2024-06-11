@@ -28,17 +28,21 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
   @override
   Future<bool> completeTask(
       String taskerId, String taskId, String token) async {
+    print(taskerId);
+    print(taskId);
+    print(token);
     try {
       var headers = {
         'Content-Type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer $token',
       };
-      final response = await http.post(Uri.parse(UrlApiAppUser.completedJob),
+      final response = await http.post(Uri.parse(UrlApiAppUser.completedTask),
           headers: headers,
           body: jsonEncode({
             "_id": taskId, // booking Task
-            "taskerId": taskerId
+            "taskerId": taskerId, "citySettingId": "66399069b760e117606292a0"
           }));
+      print(response.statusCode);
       if (response.statusCode == 200) {
         return true;
       }
@@ -56,11 +60,11 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
         'Content-Type': 'application/json; charset=utf-8',
         'Authorization': 'Bearer $token',
       };
-      final response = await http.post(Uri.parse(UrlApiAppUser.cancelJob),
+      final response = await http.post(Uri.parse(UrlApiAppUser.cancelTask),
           headers: headers,
           body: jsonEncode({
             "_id": taskId, // booking Task
-            "taskerId": taskerId
+            "taskerId": taskerId, "citySettingId": "66399069b760e117606292a0"
           }));
       if (response.statusCode == 200) {
         return true;
@@ -237,5 +241,19 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  @override
+  Future<bool> cancelTaskBooking(
+      {required TaskBookingModel taskBookingModel, required String token}) {
+    // TODO: implement cancelTaskBooking
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> completeTaskBooking(
+      {required TaskBookingModel taskBookingModel, required String token}) {
+    // TODO: implement completeTaskBooking
+    throw UnimplementedError();
   }
 }

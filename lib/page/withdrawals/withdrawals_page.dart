@@ -111,7 +111,6 @@ class _WithdrawalsPageState extends State<WithdrawalsPage> {
                   controller: withDrawalCubit.stk,
                   style: const TextStyle(color: Colors.black),
                   cursorColor: Colors.grey.shade300,
-                  obscureText: true,
                   autofocus: false,
                   decoration: InputDecoration(
                     fillColor: Colors.grey.shade300,

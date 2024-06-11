@@ -21,6 +21,7 @@ class ProfilePageCubit extends Cubit<ProfilePageState> {
     // BlocProvider.of<HomeCubit>(context).userModel = null;
     print(idUser);
     bool result = await userRepository.logOut(userId: idUser, token: token);
+    // bool result = true;
     if (result) {
       await _hiveService.closeBox(HiveService.boxUserModel);
       Future.delayed(const Duration(milliseconds: 200), () {

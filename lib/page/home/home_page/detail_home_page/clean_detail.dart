@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:partner_app/constant/constant.dart';
+import 'package:partner_app/cubit/home/history_detail/clean_booking/clean_history_cubit.dart';
+import 'package:partner_app/cubit/home/history_detail/clean_booking/clean_history_state.dart';
 import 'package:partner_app/data/model/clean_task_model.dart';
 
 class CleanDetailHistoryPage extends StatefulWidget {
@@ -10,10 +14,14 @@ class CleanDetailHistoryPage extends StatefulWidget {
 }
 
 class _CleanDetailHistoryPageState extends State<CleanDetailHistoryPage> {
+  late CleanHistoryCubit cleanHistoryCubit;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    BlocProvider.of<CleanHistoryCubit>(context)
+        .init(context, widget.cleanModel);
+    cleanHistoryCubit = BlocProvider.of<CleanHistoryCubit>(context);
   }
 
   @override
@@ -86,7 +94,7 @@ class _CleanDetailHistoryPageState extends State<CleanDetailHistoryPage> {
                     const SizedBox(
                       height: 8,
                     ),
-                    if (widget.cleanModel.taskerIdArr!.isNotEmpty)
+                    if (widget.cleanModel.taskerId != null)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -103,7 +111,7 @@ class _CleanDetailHistoryPageState extends State<CleanDetailHistoryPage> {
                               CircleAvatar(
                                 radius: 30,
                                 backgroundImage: NetworkImage(
-                                    "${UrlApiAppUser.host}${widget.cleanModel.taskerIdArr!.first.avatar}"),
+                                    "${UrlApiAppUser.host}${widget.cleanModel.taskerId!.avatar}"),
                               ),
                               const SizedBox(
                                 width: 16,
@@ -112,8 +120,7 @@ class _CleanDetailHistoryPageState extends State<CleanDetailHistoryPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    widget.cleanModel.taskerIdArr!.first
-                                        .fullName!,
+                                    widget.cleanModel.taskerId!.fullName!,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -358,6 +365,38 @@ class _CleanDetailHistoryPageState extends State<CleanDetailHistoryPage> {
                         Text(
                             '${(widget.cleanModel.cleanId!.estimateTime! / 60).round()} giờ, ${(widget.cleanModel.time! / 60).round()}:00 đến ${(widget.cleanModel.time! / 60).round() + (widget.cleanModel.cleanId!.estimateTime! / 60).round()}:00',
                             style: const TextStyle(color: Colors.grey)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Đánh giá',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey)),
+                        BlocConsumer<CleanHistoryCubit, CleanHistoryState>(
+                          bloc: cleanHistoryCubit,
+                          listener: (context, state) {},
+                          builder: (context, state) {
+                            if (state is CleanHistoryLoaded &&
+                                cleanHistoryCubit.cleanRatingModel != null) {
+                              return RatingBarIndicator(
+                                rating: cleanHistoryCubit
+                                    .cleanRatingModel!.cleanBookingRating!
+                                    .toDouble(),
+                                itemBuilder: (context, index) => const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                itemCount: 5,
+                                itemSize: 24.0,
+                                direction: Axis.horizontal,
+                              );
+                            }
+                            return const Text('Chưa đánh giá',
+                                style: TextStyle(color: Colors.grey));
+                          },
+                        ),
                       ],
                     ),
                   ],

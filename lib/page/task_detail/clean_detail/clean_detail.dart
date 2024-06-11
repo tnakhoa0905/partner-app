@@ -103,8 +103,7 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
                           const SizedBox(
                             height: 8,
                           ),
-                          if (cleanDetailCubit
-                              .cleanModel!.taskerIdArr!.isNotEmpty)
+                          if (cleanDetailCubit.cleanModel!.taskerId != null)
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -121,7 +120,7 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
                                     CircleAvatar(
                                       radius: 30,
                                       backgroundImage: NetworkImage(
-                                          "${UrlApiAppUser.host}${cleanDetailCubit.cleanModel!.taskerIdArr!.first.avatar}"),
+                                          "${UrlApiAppUser.host}${cleanDetailCubit.cleanModel!.taskerId!.avatar}"),
                                     ),
                                     const SizedBox(
                                       width: 16,
@@ -131,8 +130,8 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          cleanDetailCubit.cleanModel!
-                                              .taskerIdArr!.first.fullName!,
+                                          cleanDetailCubit
+                                              .cleanModel!.taskerId!.fullName!,
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -432,9 +431,10 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
                     if (cleanDetailCubit.cleanModel!.date!.day ==
                         DateTime.now().day)
                       ElevatedButton(
-                          onPressed: () => homePageCubit.completeTask(
+                          onPressed: () => homePageCubit.completeCleanBooking(
                               context: context,
-                              taskId: cleanDetailCubit.cleanModel!.id!),
+                              taskId: cleanDetailCubit.cleanModel!.id!,
+                              cleanModel: cleanDetailCubit.cleanModel!),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
                             overlayColor: Colors.grey,
@@ -455,10 +455,11 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
                       height: 8,
                     ),
                     ElevatedButton(
-                        onPressed: () => homePageCubit.cancelTask(
-                            context: context,
-                            taskId: cleanDetailCubit.cleanModel!.id!,
-                            cleanModel: cleanDetailCubit.cleanModel),
+                        onPressed: () => homePageCubit.cancelCleanBooking(
+                              context: context,
+                              taskId: cleanDetailCubit.cleanModel!.id!,
+                              cleanModel: cleanDetailCubit.cleanModel!,
+                            ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.grey.shade200,
                           overlayColor: Colors.grey,
@@ -478,29 +479,29 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
                     const SizedBox(
                       height: 8,
                     ),
-                    if (cleanDetailCubit.cleanModel!.date!.day ==
-                        DateTime.now().day)
-                      ElevatedButton(
-                          onPressed: () {
-                            homePageCubit.createPaymentLinkCleanModel(
-                                cleanDetailCubit.cleanModel!);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey.shade200,
-                            overlayColor: Colors.grey,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
+                    // if (cleanDetailCubit.cleanModel!.date!.day ==
+                    //     DateTime.now().day)
+                    ElevatedButton(
+                        onPressed: () {
+                          homePageCubit.createPaymentLinkCleanModel(
+                              cleanDetailCubit.cleanModel!);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey.shade200,
+                          overlayColor: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: const Center(
-                            child: Text(
-                              'Thanh toán onl',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ))
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Thanh toán onl',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.green,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ))
                   ],
                 );
               }
