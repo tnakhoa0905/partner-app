@@ -36,7 +36,8 @@ class CreateCleanModel {
       json.encode(data.toJson());
   factory CreateCleanModel.fromJson(Map<String, dynamic> json) =>
       CreateCleanModel(
-        userId: json["userId"],
+        userId:
+            json["userId"] is String ? json["userId"] : json["userId"]["id"],
         name: json["name"],
         typeOfHouse: json["typeOfHouse"],
         address: json["address"],
@@ -77,7 +78,7 @@ String createCleanModelToJson(CreateCleanModel data) =>
 class CleanModel {
   TaskerId? taskerId;
   String? id;
-  UserId? userId;
+  String? userId;
   CleanId? cleanId;
   int? status;
   String? companyId;
@@ -106,7 +107,7 @@ class CleanModel {
   CleanModel copyWith({
     TaskerId? taskerId,
     String? id,
-    UserId? userId,
+    String? userId,
     CleanId? cleanId,
     int? status,
     String? companyId,
@@ -137,7 +138,7 @@ class CleanModel {
       taskerId:
           json["taskerId"] == null ? null : TaskerId.fromJson(json["taskerId"]),
       id: json["_id"],
-      userId: json["userId"] == null ? null : UserId.fromJson(json["cleanId"]),
+      userId: json["userId"] is String ? json["userId"] : json["userId"]["_id"],
       cleanId:
           json["cleanId"] == null ? null : CleanId.fromJson(json["cleanId"]),
       status: json["status"],

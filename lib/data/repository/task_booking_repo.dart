@@ -8,7 +8,11 @@ import 'package:partner_app/data/model/task_booking_rating.dart';
 
 abstract class TaskBookingRepo {
   Future<bool> completeTask(String taskerId, String taskId, String token);
-  Future<bool> cancelTask(String taskerId, String taskId, String token);
+  Future<bool> cancelTask(
+      {required String taskerId,
+      required String taskId,
+      required String token,
+      required String cancelReason});
   Future<dynamic> getWaitingTask(String taskerId, String token);
   Future<dynamic> getDoneTask(String taskerId, String token);
   Future<TaskBookingModel?> getTaskBookingById(String taskId, String token);
@@ -53,7 +57,11 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
   }
 
   @override
-  Future<bool> cancelTask(String taskerId, String taskId, String token) async {
+  Future<bool> cancelTask(
+      {required String taskerId,
+      required String taskId,
+      required String token,
+      required String cancelReason}) async {
     // TODO: implement cancelTask
     try {
       var headers = {
@@ -64,7 +72,8 @@ class TaskBookingRepoImplement extends TaskBookingRepo {
           headers: headers,
           body: jsonEncode({
             "_id": taskId, // booking Task
-            "taskerId": taskerId, "citySettingId": "66399069b760e117606292a0"
+            "taskerId": taskerId, "citySettingId": "66399069b760e117606292a0",
+            "cancelReason": cancelReason
           }));
       if (response.statusCode == 200) {
         return true;

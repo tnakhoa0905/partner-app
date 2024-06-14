@@ -148,7 +148,7 @@ class _PartnerSignInPage extends State<PartnerSignInPage> {
                         surfaceTintColor: Colors.transparent,
                         elevation: 0,
                         // splashFactory: NoSplash.splashFactory,
-                        backgroundColor: Colors.grey.shade300,
+                        backgroundColor: const Color(0xFF4151b1),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
@@ -165,7 +165,7 @@ class _PartnerSignInPage extends State<PartnerSignInPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Bạn đã có tài khoản?',
+                      'Bạn chưa có tài khoản?',
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),

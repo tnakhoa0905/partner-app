@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/task_detail/task_detail_state.dart';
 import 'package:partner_app/data/hive_service.dart';
@@ -10,10 +11,11 @@ class TaskBookingDetailCubit extends Cubit<TaskBookingDetailState> {
   TaskBookingModel? taskBookingModel;
   TaskBookingRepo taskBookingRepo = TaskBookingRepoImplement();
   final HiveService _hiveService = HiveService();
-
+  TextEditingController cancelReasonContoller = TextEditingController(text: '');
   init(String taskId) async {
     String token = (await _hiveService.getBox("token", 'userModel'))!;
     taskBookingModel = await taskBookingRepo.getTaskBookingById(taskId, token);
+    cancelReasonContoller.text = "";
     print("taskBookingModel");
     print(taskBookingModel);
     emit(TaskBookingDetailLoaded());

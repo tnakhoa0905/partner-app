@@ -193,6 +193,7 @@ class HomePageCubit extends Cubit<HomePageState> {
     String token = (await _hiveService.getBox("token", 'userModel'))!;
     bool result = await taskBookingRepo.completeTask(
         taskerId, taskBookingModel.id!, token);
+    print("in complete task $result");
     if (result) {
       socket.emit('partner_done_task', {
         "userId": taskBookingModel.userId!,
@@ -211,10 +212,15 @@ class HomePageCubit extends Cubit<HomePageState> {
     required BuildContext context,
     required String taskId,
     required TaskBookingModel taskBookingModel,
+    required String cancelReason,
   }) async {
     String taskerId = (await _hiveService.getBox("id", 'userModel'))!;
     String token = (await _hiveService.getBox("token", 'userModel'))!;
-    bool result = await taskBookingRepo.cancelTask(taskerId, taskId, token);
+    bool result = await taskBookingRepo.cancelTask(
+        taskerId: taskerId,
+        taskId: taskId,
+        token: token,
+        cancelReason: cancelReason);
     if (result) {
       socket.emit('partner_cancel_task', {
         "note": "Taker donetask",
@@ -257,10 +263,15 @@ class HomePageCubit extends Cubit<HomePageState> {
     required BuildContext context,
     required String taskId,
     required CleanModel cleanModel,
+    required String cancelReason,
   }) async {
     String taskerId = (await _hiveService.getBox("id", 'userModel'))!;
     String token = (await _hiveService.getBox("token", 'userModel'))!;
-    bool result = await cleanTaskRepository.cancelTask(taskerId, taskId, token);
+    bool result = await cleanTaskRepository.cancelTask(
+        taskerId: taskerId,
+        taskId: taskId,
+        token: token,
+        cancelReason: cancelReason);
     if (result) {
       socket.emit('partner_cancel_task', {
         "note": "Taker donetask",

@@ -60,11 +60,19 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
         userName.clear();
         passWord.clear();
         emit(SignInPartnerLoaded());
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppRouteUser.homePartner,
-          (route) => false,
-        );
+        if (userModel.user!.freetime!.isNotEmpty) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRouteUser.homePartner,
+            (route) => false,
+          );
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRouteUser.settingNew,
+            (route) => false,
+          );
+        }
       } else {
         print('Login err');
         emit(SignInPartnerError());
@@ -89,6 +97,8 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
       passwordController.clear();
       emailController.clear();
       fullNameController.clear();
+      userName.clear();
+      passWord.clear();
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRouteUser.signInPartner,

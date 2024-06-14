@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/withdrawals/withdrawal_page.dart';
+import 'package:partner_app/cubit/withdrawals/withdrawals_state.dart';
 
 class WithdrawalsPage extends StatefulWidget {
   const WithdrawalsPage({super.key});
@@ -199,6 +200,18 @@ class _WithdrawalsPageState extends State<WithdrawalsPage> {
                 const SizedBox(
                   height: 16,
                 ),
+                BlocConsumer<WithDrawalCubit, WithDrawalState>(
+                    bloc: withDrawalCubit,
+                    builder: (context, state) {
+                      if (state is WithDrawalError) {
+                        return const Text(
+                          'Số dư tài khoản còn lại phải trên 1.000.000 để duy trì nhận đơn',
+                          style: TextStyle(color: Colors.red),
+                        );
+                      }
+                      return const SizedBox();
+                    },
+                    listener: (context, state) {}),
                 SizedBox(
                   height: 60,
                   width: MediaQuery.sizeOf(context).width,

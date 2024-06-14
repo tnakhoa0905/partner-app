@@ -7,20 +7,20 @@ import 'package:flutter/widgets.dart';
 import 'package:partner_app/cubit/setting/setting_cubit.dart';
 import 'package:partner_app/cubit/setting/setting_state.dart';
 
-class SettingPartnerPage extends StatefulWidget {
-  const SettingPartnerPage({super.key});
+class SettingNewPartnerPage extends StatefulWidget {
+  const SettingNewPartnerPage({super.key});
 
   @override
-  State<SettingPartnerPage> createState() => _SettingPartnerPageState();
+  State<SettingNewPartnerPage> createState() => _SettingPartnerPageState();
 }
 
-class _SettingPartnerPageState extends State<SettingPartnerPage> {
+class _SettingPartnerPageState extends State<SettingNewPartnerPage> {
   late SettingPageCubit settingPageCubit;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<SettingPageCubit>(context).init(context);
+    BlocProvider.of<SettingPageCubit>(context).initNew(context);
     settingPageCubit = BlocProvider.of<SettingPageCubit>(context);
   }
 
@@ -42,17 +42,17 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          // color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(12)),
-                      child: const Icon(
-                        Icons.navigate_before,
-                        color: Colors.white,
-                        size: 30,
-                      ),
+                      // child: const Icon(
+                      //   Icons.navigate_before,
+                      //   color: Colors.white,
+                      //   size: 30,
+                      // ),
                     ),
                   ),
                   const Text(
-                    'Cài đặt',
+                    'Đăng ký lịch',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -121,8 +121,12 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                                               activeColor:
                                                   const Color(0xFF4151b1),
                                               // fillColor: MaterialStateProperty.resolveWith(getColor),
-                                              value: settingPageCubit.task,
-                                              onChanged: (bool? value) {},
+                                              value: settingPageCubit.taskNew,
+                                              onChanged: (bool? value) {
+                                                print(value);
+                                                settingPageCubit
+                                                    .setTask(value!);
+                                              },
                                             ),
                                           ),
                                           const Text('Ca lẻ'),
@@ -140,8 +144,11 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                                               activeColor:
                                                   const Color(0xFF4151b1),
                                               // fillColor: MaterialStateProperty.resolveWith(getColor),
-                                              value: settingPageCubit.clean,
-                                              onChanged: (bool? value) {},
+                                              value: settingPageCubit.cleanNew,
+                                              onChanged: (bool? value) {
+                                                settingPageCubit
+                                                    .setClean(value!);
+                                              },
                                             ),
                                           ),
                                           const Text('Tổng vệ sinh')
@@ -215,26 +222,24 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                             const SizedBox(
                               height: 24,
                             ),
-                            if (settingPageCubit.usermodel!.freetime!.isEmpty)
-                              SizedBox(
-                                height: 60,
-                                width: MediaQuery.sizeOf(context).width,
-                                child: ElevatedButton(
-                                    onPressed: () => settingPageCubit
-                                        .updateFreeTime(context),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF4151b1),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
+                            SizedBox(
+                              height: 60,
+                              width: MediaQuery.sizeOf(context).width,
+                              child: ElevatedButton(
+                                  onPressed: () => settingPageCubit
+                                      .updateFreeTimeNew(context),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF4151b1),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    child: const Text(
-                                      'Đăng ký',
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.white),
-                                    )),
-                              ),
+                                  ),
+                                  child: const Text(
+                                    'Đăng ký',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  )),
+                            ),
                           ],
                         ),
                       )
@@ -253,7 +258,7 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
       {required String date, required List<int> value}) {
     List<int> listDefault = [];
     for (var element in value) {
-      if (settingPageCubit.listCalendar.contains(element)) {
+      if (settingPageCubit.listCalendarNew.contains(element)) {
         listDefault.add(element);
       }
     }
@@ -300,21 +305,21 @@ class _SettingPartnerPageState extends State<SettingPartnerPage> {
                   textStyle: TextStyle(fontSize: 16)),
               checkBoxButtonValues: (values) {
                 List<int> listCheck = [];
-                listCheck.addAll(settingPageCubit.listCalendar);
-                if (settingPageCubit.listCalendar.isEmpty) {
-                  settingPageCubit.listCalendar.addAll(values);
+                listCheck.addAll(settingPageCubit.listCalendarNew);
+                if (settingPageCubit.listCalendarNew.isEmpty) {
+                  settingPageCubit.listCalendarNew.addAll(values);
                 } else {
                   for (var item in value) {
                     if (!values.contains(item)) {
-                      settingPageCubit.listCalendar.remove(item);
+                      settingPageCubit.listCalendarNew.remove(item);
                     }
                   }
                   for (var item in values) {
-                    if (!settingPageCubit.listCalendar.contains(item)) {
-                      settingPageCubit.listCalendar.add(item);
+                    if (!settingPageCubit.listCalendarNew.contains(item)) {
+                      settingPageCubit.listCalendarNew.add(item);
                     }
                   }
-                  print(settingPageCubit.listCalendar);
+                  print(settingPageCubit.listCalendarNew);
                 }
               },
             ),

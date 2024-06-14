@@ -7,7 +7,11 @@ import 'package:http/http.dart' as http;
 
 abstract class CleanTaskRepository {
   Future<bool> completeTask(String taskerId, String taskId, String token);
-  Future<bool> cancelTask(String taskerId, String taskId, String token);
+  Future<bool> cancelTask(
+      {required String taskerId,
+      required String taskId,
+      required String token,
+      required String cancelReason});
   Future<CleanModel?> getCleanById(String taskId, String token);
   Future<CleanRatingModel?> getRatingClean(
       {required CleanModel cleanModel, required String token});
@@ -65,7 +69,11 @@ class CleanTaskRepositoryImplement extends CleanTaskRepository {
   }
 
   @override
-  Future<bool> cancelTask(String taskerId, String taskId, String token) async {
+  Future<bool> cancelTask(
+      {required String taskerId,
+      required String taskId,
+      required String token,
+      required String cancelReason}) async {
     // TODO: implement cancelTask
     try {
       var headers = {
@@ -76,7 +84,8 @@ class CleanTaskRepositoryImplement extends CleanTaskRepository {
           headers: headers,
           body: jsonEncode({
             "_id": taskId, // booking Task
-            "taskerId": taskerId, "citySettingId": "66399069b760e117606292a0"
+            "taskerId": taskerId, "citySettingId": "66399069b760e117606292a0",
+            "cancelReason": cancelReason
           }));
       if (response.statusCode == 200) {
         return true;

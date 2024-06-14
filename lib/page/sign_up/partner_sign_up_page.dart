@@ -173,7 +173,7 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
                       ),
                       TextField(
                         controller: signInPartnerCubit.emailController,
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         cursorColor: Colors.grey.shade300,
                         decoration: InputDecoration(
                           fillColor: Colors.grey.shade300,
@@ -206,7 +206,7 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
                       ),
                       TextField(
                         controller: signInPartnerCubit.passwordController,
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                         cursorColor: Colors.grey.shade300,
                         decoration: InputDecoration(
                           fillColor: Colors.grey.shade300,

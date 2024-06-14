@@ -37,13 +37,47 @@ class _HomePartnerPageState extends State<HomePartner> {
     NotificationsServices().initialize(
         onDeviceTokenChanged: (text) {},
         onMessageOpenedApp: ((payload) {
+          BlocProvider.of<HomePageCubit>(context).init();
+          print(payload);
           try {
-            print("dcmsaia");
-            print("dcmsaia${payload}");
-            BlocProvider.of<HomePageCubit>(context).init();
             // Navigator.pop(context);
-            Navigator.pushNamed(context, AppRouteUser.taskBookingDetail,
-                arguments: payload['_id']);
+            switch (payload["type"]) {
+              case "taskBooking":
+                {
+                  Navigator.pushNamed(context, AppRouteUser.taskBookingDetail,
+                      arguments: payload['_id']);
+                }
+              case "cleanBooking":
+                {
+                  Navigator.pushNamed(context, AppRouteUser.cleanDetail,
+                      arguments: payload['_id']);
+                }
+              case "withdrawals":
+                {
+                  Navigator.pushNamed(context, AppRouteUser.finance,
+                      arguments: payload['_id']);
+                }
+              default:
+                {
+                  Navigator.pushNamed(context, AppRouteUser.homePartner,
+                      arguments: payload['_id']);
+                }
+            }
+            // if (payload["type"] == 'taskBooking') {
+            //   Navigator.pushNamed(context, AppRouteUser.taskBookingDetail,
+            //       arguments: payload['_id']);
+            // }
+            // if (payload["type"] == "cleanBooking") {
+            //   Navigator.pushNamed(context, AppRouteUser.cleanDetail,
+            //       arguments: payload['_id']);
+            // }
+            // if (payload["type"] == "withdrawals") {
+            //   Navigator.pushNamed(context, AppRouteUser.finance,
+            //       arguments: payload['_id']);
+            // } else {
+            //   Navigator.pushNamed(context, AppRouteUser.homePartner,
+            //       arguments: payload['_id']);
+            // }
           } catch (e) {
             Navigator.pushNamed(context, AppRouteUser.homePartner,
                 arguments: payload['_id']);
@@ -80,8 +114,6 @@ class _HomePartnerPageState extends State<HomePartner> {
       (pendingDynamicLinkData) {
         print(Platform.isAndroid);
         print(Platform.isIOS);
-
-        print("asdsadsjdkfhadjfhlkadjkadhfkljsdahfkjldhkjf");
         // Set up the `onLink` event listener next as it may be received here
         // ignore: unnecessary_null_comparison
         if (pendingDynamicLinkData != null) {

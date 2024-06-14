@@ -18,7 +18,10 @@ abstract class UserRepository {
       required String email,
       required String fullName,
       required String token});
-  Future<bool> logOut({required String userId, required String token});
+  Future<bool> logOut(
+      {required String userId,
+      required String token,
+      required String fcmToken});
   Future<bool> updateLocation({
     required String userId,
     required String token,
@@ -140,7 +143,10 @@ class UserRepositoryImplement extends UserRepository {
   }
 
   @override
-  Future<bool> logOut({required String userId, required String token}) async {
+  Future<bool> logOut(
+      {required String userId,
+      required String token,
+      required String fcmToken}) async {
     // TODO: implement logOut
     try {
       print('go go');
@@ -150,9 +156,7 @@ class UserRepositoryImplement extends UserRepository {
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': 'Bearer $token',
           },
-          body: jsonEncode({
-            "userId": userId,
-          }));
+          body: jsonEncode({"userId": userId, "token": token}));
       print(response.statusCode);
       if (response.statusCode == 200) {
         print('ccccc');

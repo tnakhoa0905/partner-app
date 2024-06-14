@@ -13,3 +13,7 @@ class WithDrawalLoading extends WithDrawalState {
 class WithDrawalLoaded extends WithDrawalState {
   WithDrawalLoaded();
 }
+
+class WithDrawalError extends WithDrawalState {
+  WithDrawalError();
+}

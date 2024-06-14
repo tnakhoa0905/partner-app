@@ -139,7 +139,8 @@ class ThemeApp {
 }
 
 class UrlApiAppUser {
-  static const String host = "https://apitasks.pdteam.net/";
+  // static const String host = "https://apitasks.pdteam.net/";
+  static const String host = "https://apifordev.pdteam.net/";
   // static const String host = "http://192.168.1.27:3011/";
   static const signIn = "${host}users/login";
   static const signUp = "${host}users/partner_signup";
@@ -151,10 +152,7 @@ class UrlApiAppUser {
   static const getTaskById = "${host}taskbookings/get_taskbooking_by_id";
   static const getWaitingJob = "${host}users/partner_waiting_task";
   static const getDoneJob = "${host}users/partner_done_task";
-  static const completedTask = "${host}users/partner_completed_taskbooking";
-  static const cancelTask = "${host}users/partner_cancel_task";
-  static const completedClean = "${host}users/partner_completed_cleanbooking";
-  static const cancelClean = "${host}users/partner_cancel_clean";
+
   static const updateFreeTime = "${host}users/partner_update_freetime";
   static const createPayment = "${host}payments/create_payment_link";
   static const getCleanById = "${host}cleanbookings/get_cleanbooking_by_id";
@@ -164,4 +162,10 @@ class UrlApiAppUser {
   //
   static const getRatingClean =
       "${host}ratings/get_clean_booking_by_id_and_user_id";
+  static const completedTask = "${host}users/partner_completed_taskbooking";
+  static const cancelTask = "${host}users/partner_cancel_task";
+  static const completedClean = "${host}users/partner_completed_cleanbooking";
+  static const cancelClean = "${host}users/partner_cancel_clean";
+  static const getAllWithdrawalas =
+      "${host}withdrawals/get_withdrawal_by_userid";
 }

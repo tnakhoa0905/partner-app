@@ -92,6 +92,7 @@ class User {
   DateTime? registerDate;
   String? email;
   int? level;
+  List<int>? partnerServiceType;
 
   User(
       {this.gender,
@@ -107,6 +108,7 @@ class User {
       this.phoneNumber,
       this.registerDate,
       this.level,
+      this.partnerServiceType,
       this.email});
 
   User copyWith(
@@ -123,6 +125,7 @@ class User {
           String? phoneNumber,
           DateTime? registerDate,
           int? level,
+          List<int>? partnerServiceType,
           String? email}) =>
       User(
           gender: gender ?? this.gender,
@@ -138,6 +141,7 @@ class User {
           phoneNumber: phoneNumber ?? this.phoneNumber,
           registerDate: registerDate ?? this.registerDate,
           level: level ?? this.level,
+          partnerServiceType: partnerServiceType ?? this.partnerServiceType,
           email: email ?? this.email);
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -161,6 +165,9 @@ class User {
             : DateTime.parse(json["registerDate"]),
         level: json["level"],
         email: json["email"],
+        partnerServiceType: json["partnerServiceType"] == null
+            ? []
+            : List<int>.from(json["partnerServiceType"]!.map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -181,5 +188,8 @@ class User {
         "registerDate": registerDate?.toIso8601String(),
         "email": email,
         "level": level,
+        "partnerServiceType": partnerServiceType == null
+            ? []
+            : List<dynamic>.from(partnerServiceType!.map((x) => x)),
       };
 }

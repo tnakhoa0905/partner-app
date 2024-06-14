@@ -10,6 +10,7 @@ import 'package:partner_app/page/income_history/income_history_partner_page.dart
 import 'package:partner_app/page/payment/cancel_payment_page.dart';
 import 'package:partner_app/page/payment/payment_page.dart';
 import 'package:partner_app/page/payment/payment_success_page.dart';
+import 'package:partner_app/page/setting/setting_new_parner_page.dart';
 import 'package:partner_app/page/setting/setting_partner_page.dart';
 import 'package:partner_app/page/sign_in/partner_sign_in_page.dart';
 import 'package:partner_app/page/sign_up/partner_sign_up_page.dart';
@@ -71,6 +72,9 @@ class RouteGenerate {
       case (AppRouteUser.setting):
         return MaterialPageRoute(
             builder: ((context) => const SettingPartnerPage()));
+      case (AppRouteUser.settingNew):
+        return MaterialPageRoute(
+            builder: ((context) => const SettingNewPartnerPage()));
       case (AppRouteUser.support):
         return MaterialPageRoute(
             builder: ((context) => const SupportPartnerPage()));
@@ -132,6 +136,7 @@ class AppRouteUser {
   static const String service = "/service";
 
   static const String setting = "/setting";
+  static const String settingNew = "/setting_new";
   static const String support = "/support";
   static const String weekReport = "/week_report";
 

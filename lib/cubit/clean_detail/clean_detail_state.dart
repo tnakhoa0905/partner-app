@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/cubit/clean_detail/clean_detail_cubit.dart';
 import 'package:partner_app/data/hive_service.dart';
@@ -10,10 +11,11 @@ class CleanDetailCubit extends Cubit<CleanDetailState> {
   CleanModel? cleanModel;
   CleanTaskRepository cleanTaskRepository = CleanTaskRepositoryImplement();
   final HiveService _hiveService = HiveService();
-
+  TextEditingController cancelReasonContoller = TextEditingController(text: '');
   init(String taskId) async {
     String token = (await _hiveService.getBox("token", 'userModel'))!;
     cleanModel = await cleanTaskRepository.getCleanById(taskId, token);
+    cancelReasonContoller.text = '';
     print(cleanModel);
     emit(CleanDetailLoaded());
   }
