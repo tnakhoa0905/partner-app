@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,6 +20,7 @@ class NotificationsServices {
   Future<void> initialize({
     required void Function(String? deviceToken) onDeviceTokenChanged,
     required void Function(Map<String, dynamic> payload) onMessageOpenedApp,
+    required void Function(Map<String, dynamic> payload) onMessage,
   }) async {
     var settings = await FirebaseMessaging.instance.requestPermission();
     debugPrint('User granted permission: ${settings.authorizationStatus}');
@@ -56,6 +58,7 @@ class NotificationsServices {
     FirebaseMessaging.onMessage.listen((remoteMessage) {
       if (remoteMessage.notification != null &&
           remoteMessage.notification?.android != null) {
+        onMessage(remoteMessage.data ?? {});
         _showAndroidNotification(remoteMessage, androidNotificationChannel);
       }
     });

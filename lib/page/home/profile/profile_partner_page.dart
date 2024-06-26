@@ -22,6 +22,8 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
     super.initState();
     // BlocProvider.of<ProfilePageCubit>(context).init(context);
     homePageCubit = BlocProvider.of<HomePageCubit>(context);
+    BlocProvider.of<HomePageCubit>(context).getUser();
+
     profilePageCubit = BlocProvider.of<ProfilePageCubit>(context);
   }
 
@@ -240,130 +242,130 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                     const SizedBox(
                       height: 16,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                'Báo cáo tuần',
-                                style: TextStyle(
-                                    color: Color(0xFF4151b1),
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const Spacer(),
-                              SizedBox(
-                                width: 50,
-                                height: 30,
-                                child: ElevatedButton(
-                                    onPressed: () => Navigator.pushNamed(
-                                        context, AppRouteUser.weekReport),
-                                    style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.all(0),
-                                      backgroundColor: const Color(0xFFf57171),
-                                    ),
-                                    child: const Icon(
-                                      Icons.navigate_next,
-                                      color: Colors.white,
-                                      size: 30,
-                                    )),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const Row(
-                            children: [
-                              Text(
-                                'Thu nhập trong tuần này',
-                                style: TextStyle(),
-                              ),
-                              Spacer(),
-                              Text('0đ')
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          const Row(
-                            children: [
-                              Text(
-                                'Công việc đã hoàn thành',
-                                style: TextStyle(),
-                              ),
-                              Spacer(),
-                              Text('0')
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                'Lịch sử thu nhập',
-                                style: TextStyle(
-                                    color: Color(0xFF4151b1),
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const Spacer(),
-                              SizedBox(
-                                width: 50,
-                                height: 30,
-                                child: ElevatedButton(
-                                    onPressed: () => Navigator.pushNamed(
-                                        context, AppRouteUser.incomeHistory),
-                                    style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.all(0),
-                                      backgroundColor: const Color(0xFFf57171),
-                                    ),
-                                    child: const Icon(
-                                      Icons.navigate_next,
-                                      color: Colors.white,
-                                      size: 30,
-                                    )),
-                              )
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          const Row(
-                            children: [
-                              Text(
-                                'Thu nhập tháng này',
-                              ),
-                              Spacer(),
-                              Text('0đ')
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
+                    // Container(
+                    //   padding: const EdgeInsets.all(16),
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white,
+                    //     borderRadius: BorderRadius.circular(16),
+                    //   ),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Row(
+                    //         children: [
+                    //           const Text(
+                    //             'Báo cáo tuần',
+                    //             style: TextStyle(
+                    //                 color: Color(0xFF4151b1),
+                    //                 fontSize: 24,
+                    //                 fontWeight: FontWeight.bold),
+                    //           ),
+                    //           const Spacer(),
+                    //           SizedBox(
+                    //             width: 50,
+                    //             height: 30,
+                    //             child: ElevatedButton(
+                    //                 onPressed: () => Navigator.pushNamed(
+                    //                     context, AppRouteUser.weekReport),
+                    //                 style: ElevatedButton.styleFrom(
+                    //                   padding: const EdgeInsets.all(0),
+                    //                   backgroundColor: const Color(0xFFf57171),
+                    //                 ),
+                    //                 child: const Icon(
+                    //                   Icons.navigate_next,
+                    //                   color: Colors.white,
+                    //                   size: 30,
+                    //                 )),
+                    //           )
+                    //         ],
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 16,
+                    //       ),
+                    //       const Row(
+                    //         children: [
+                    //           Text(
+                    //             'Thu nhập trong tuần này',
+                    //             style: TextStyle(),
+                    //           ),
+                    //           Spacer(),
+                    //           Text('0đ')
+                    //         ],
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 8,
+                    //       ),
+                    //       const Row(
+                    //         children: [
+                    //           Text(
+                    //             'Công việc đã hoàn thành',
+                    //             style: TextStyle(),
+                    //           ),
+                    //           Spacer(),
+                    //           Text('0')
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 16,
+                    // ),
+                    // Container(
+                    //   padding: const EdgeInsets.all(16),
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white,
+                    //     borderRadius: BorderRadius.circular(16),
+                    //   ),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Row(
+                    //         children: [
+                    //           const Text(
+                    //             'Lịch sử thu nhập',
+                    //             style: TextStyle(
+                    //                 color: Color(0xFF4151b1),
+                    //                 fontSize: 24,
+                    //                 fontWeight: FontWeight.bold),
+                    //           ),
+                    //           const Spacer(),
+                    //           SizedBox(
+                    //             width: 50,
+                    //             height: 30,
+                    //             child: ElevatedButton(
+                    //                 onPressed: () => Navigator.pushNamed(
+                    //                     context, AppRouteUser.incomeHistory),
+                    //                 style: ElevatedButton.styleFrom(
+                    //                   padding: const EdgeInsets.all(0),
+                    //                   backgroundColor: const Color(0xFFf57171),
+                    //                 ),
+                    //                 child: const Icon(
+                    //                   Icons.navigate_next,
+                    //                   color: Colors.white,
+                    //                   size: 30,
+                    //                 )),
+                    //           )
+                    //         ],
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 16,
+                    //       ),
+                    //       const Row(
+                    //         children: [
+                    //           Text(
+                    //             'Thu nhập tháng này',
+                    //           ),
+                    //           Spacer(),
+                    //           Text('0đ')
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 16,
+                    // ),
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -431,7 +433,7 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                           Row(
                             children: [
                               const Text(
-                                'Bộ dụng cụ và hoá chất',
+                                'Tài khoản',
                                 style: TextStyle(
                                     color: Color(0xFF4151b1),
                                     fontSize: 24,
@@ -442,7 +444,10 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                                 width: 50,
                                 height: 30,
                                 child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushNamed(context,
+                                          AppRouteUser.bankingInfoPage);
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.all(0),
                                       backgroundColor: const Color(0xFFf57171),
@@ -461,7 +466,7 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                           const Row(
                             children: [
                               Text(
-                                'Bộ dụng cụ và hoá chất',
+                                'Cài đặt tài khoản của bạn',
                               ),
                               Spacer(),
                               Text('')
@@ -470,9 +475,11 @@ class _ProfilePartnerPageState extends State<ProfilePartnerPage> {
                         ],
                       ),
                     ),
+
                     const SizedBox(
                       height: 16,
                     ),
+
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(

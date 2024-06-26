@@ -16,7 +16,7 @@ PODS:
     - Firebase/Analytics (= 10.25.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.31.1):
+  - firebase_core (2.32.0):
     - Firebase/CoreOnly (= 10.25.0)
     - Flutter
   - firebase_dynamic_links (5.5.6):
@@ -185,7 +185,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Firebase: 0312a2352584f782ea56f66d91606891d4607f06
   firebase_analytics: 0b2b459312872129295c3f9c44225eda552fd8f3
-  firebase_core: 22e117a2e0dec3cb318c8f53f2dd01c140375617
+  firebase_core: a626d00494efa398e7c54f25f1454a64c8abf197
   firebase_dynamic_links: 907b778ac5781460847013d6f1041c6ceb06b1e0
   firebase_messaging: a749db7e84bb2d24a77671a9d0a789fe6cd3b1ac
   FirebaseAnalytics: ec00fe8b93b41dc6fe4a28784b8e51da0647a248

@@ -11,7 +11,8 @@ class WithDrawalLoading extends WithDrawalState {
 }
 
 class WithDrawalLoaded extends WithDrawalState {
-  WithDrawalLoaded();
+  String? error;
+  WithDrawalLoaded({this.error = ""});
 }
 
 class WithDrawalError extends WithDrawalState {

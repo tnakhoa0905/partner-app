@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:partner_app/data/model/clean_task_model.dart';
 import 'package:partner_app/data/model/task_booking_model.dart';
 import 'package:partner_app/page/edit_profile/edit_profile_page.dart';
+import 'package:partner_app/page/finance/banking_info/banking_info_page.dart';
+import 'package:partner_app/page/finance/deposit/deposit_page.dart';
 import 'package:partner_app/page/finance/finance_partner_page.dart';
 import 'package:partner_app/page/home/home_page/detail_home_page/clean_detail.dart';
 import 'package:partner_app/page/home/home_page/detail_home_page/task_detail_page.dart';
 import 'package:partner_app/page/home/home_partner.dart';
 import 'package:partner_app/page/income_history/income_history_partner_page.dart';
+import 'package:partner_app/page/payment/cancel_payment_deposit_page.dart';
 import 'package:partner_app/page/payment/cancel_payment_page.dart';
 import 'package:partner_app/page/payment/payment_page.dart';
+import 'package:partner_app/page/payment/payment_success_deposit_page.dart';
 import 'package:partner_app/page/payment/payment_success_page.dart';
+import 'package:partner_app/page/reset_pass/change_password/change_password.dart';
+import 'package:partner_app/page/reset_pass/reset_password_page.dart';
+import 'package:partner_app/page/reset_pass/verify_otp/verify_otp_page.dart';
 import 'package:partner_app/page/setting/setting_new_parner_page.dart';
 import 'package:partner_app/page/setting/setting_partner_page.dart';
 import 'package:partner_app/page/sign_in/partner_sign_in_page.dart';
@@ -19,7 +26,7 @@ import 'package:partner_app/page/support/support_partner_page.dart';
 import 'package:partner_app/page/task_detail/clean_detail/clean_detail.dart';
 import 'package:partner_app/page/task_detail/task_booking_detail/task_detail_page.dart';
 import 'package:partner_app/page/week_report/week_report_partner_page.dart';
-import 'package:partner_app/page/withdrawals/withdrawals_page.dart';
+import 'package:partner_app/page/finance/withdrawals/withdrawals_page.dart';
 
 class RouteGenerate {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -30,7 +37,7 @@ class RouteGenerate {
 
       ///////////// PARTNER
       case (AppRouteUser.homePartner):
-        return MaterialPageRoute(builder: ((context) => const HomePartner()));
+        return MaterialPageRoute(builder: ((context) => HomePartner()));
       case (AppRouteUser.signInPartner):
         return MaterialPageRoute(
             builder: ((context) => const PartnerSignInPage()));
@@ -95,7 +102,32 @@ class RouteGenerate {
       case (AppRouteUser.withdrawalsPage):
         return MaterialPageRoute(
             builder: ((context) => const WithdrawalsPage()));
+      case (AppRouteUser.bankingInfoPage):
+        return MaterialPageRoute(
+            builder: ((context) => const BankingInfoPage()));
+      case (AppRouteUser.depositPage):
+        return MaterialPageRoute(builder: ((context) => const DepositPage()));
+      case (AppRouteUser.depositSuccess):
+        return MaterialPageRoute(
+            builder: ((context) => const PaymentSuccessDepositPage()));
+      case (AppRouteUser.depositCancel):
+        return MaterialPageRoute(
+            builder: ((context) => const CancelPaymentDepositPage()));
+      case (AppRouteUser.resetPasswordPage):
+        return MaterialPageRoute(
+            builder: ((context) => const ResetPasswordPage()));
+      case (AppRouteUser.veryfiOtpPage):
+        {
+          String verify = args as String;
+          return MaterialPageRoute(
+              builder: ((context) => VerifyOtpPage(
+                    verificationId: verify,
+                  )));
+        }
 
+      case (AppRouteUser.changePasswordPage):
+        return MaterialPageRoute(
+            builder: ((context) => const ChangePasswordPage()));
       default:
         return errorRoute();
     }
@@ -144,9 +176,20 @@ class AppRouteUser {
   static const String paymentPage = "/payment";
   static const String paymentSuccessPage = "/payment_success";
   static const String paymentCancelPage = "/payment_cancel";
+  static const String depositCancel = "/deposit_cancel";
+  static const String depositSuccess = "/deposit_success";
+  //profile
   static const String withdrawalsPage = "/withdrawals_page";
+  static const String depositPage = "/deposit_page";
+  static const String bankingInfoPage = "/banking_info_page";
+
   //history
   static const String taskBookingHistoryDetail = "/task_booking_history_detail";
   static const String cleanHistoryDetail = "/clean_history_detail";
   static const String permanentHistoryDetail = "/permanent_history_detail";
+
+  //reset password
+  static const String resetPasswordPage = "/reset_password";
+  static const String veryfiOtpPage = "/veryfi_otp";
+  static const String changePasswordPage = "/change_password";
 }

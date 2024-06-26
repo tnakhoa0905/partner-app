@@ -30,14 +30,6 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
     }
   }
 
-  initSignUp(context) async {
-    phoneNumberController.clear();
-    passwordController.clear();
-    emailController.clear();
-    fullNameController.clear();
-    emit(SignInPartnerLoaded());
-  }
-
   Future<void> login(BuildContext context) async {
     print("object");
     try {
@@ -78,47 +70,8 @@ class SignInPartnerCubit extends Cubit<SignInPartnerState> {
         emit(SignInPartnerError());
       }
     } catch (e) {
+      emit(SignInPartnerError());
       throw Exception(e);
     }
   }
-
-  signUp(BuildContext context) async {
-    UserModel? userModel = await userRepository.userSignUp(
-        userName: phoneNumberController.text,
-        passWord: passwordController.text,
-        email: emailController.text,
-        fullName: fullNameController.text);
-    if (userModel != null) {
-      print('done');
-      print(userModel.token);
-      print(userModel.user!.id);
-      print(userModel.user!.fullName);
-      phoneNumberController.clear();
-      passwordController.clear();
-      emailController.clear();
-      fullNameController.clear();
-      userName.clear();
-      passWord.clear();
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        AppRouteUser.signInPartner,
-        (route) => false,
-      );
-    } else {
-      print("sai roi");
-    }
-  }
-
-  // Future<String?> _getId() async {
-  //   var deviceInfo = DeviceInfoPlugin();
-  //   if (Platform.isIOS) {
-  //     // import 'dart:io'
-  //     var iosDeviceInfo = await deviceInfo.iosInfo;
-  //     return iosDeviceInfo.identifierForVendor; // unique ID on iOS
-  //   } else if (Platform.isAndroid) {
-  //     var androidDeviceInfo = await deviceInfo.androidInfo;
-  //     return androidDeviceInfo.id; // unique ID on Android
-  //   }
-  //   return null;
-  // }
 }

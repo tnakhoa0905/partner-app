@@ -12,8 +12,8 @@ import 'package:partner_app/route/app_route.dart';
 import 'dart:io' show Platform;
 
 class HomePartner extends StatefulWidget {
-  const HomePartner({super.key});
-
+  HomePartner({super.key, this.index = 0});
+  int index;
   @override
   State<HomePartner> createState() => _HomePartnerPageState();
 }
@@ -36,6 +36,10 @@ class _HomePartnerPageState extends State<HomePartner> {
     init();
     NotificationsServices().initialize(
         onDeviceTokenChanged: (text) {},
+        onMessage: (payload) {
+          print("foreground");
+          BlocProvider.of<HomePageCubit>(context).init();
+        },
         onMessageOpenedApp: ((payload) {
           BlocProvider.of<HomePageCubit>(context).init();
           print(payload);

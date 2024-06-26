@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +17,7 @@ class PartnerSignInPage extends StatefulWidget {
 
 class _PartnerSignInPage extends State<PartnerSignInPage> {
   late SignInPartnerCubit signInPartnerCubit;
-
+  bool _passwordVisible = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -96,9 +99,24 @@ class _PartnerSignInPage extends State<PartnerSignInPage> {
                   controller: signInPartnerCubit.passWord,
                   style: const TextStyle(color: Colors.black),
                   cursorColor: Colors.grey.shade300,
-                  obscureText: true,
+                  obscureText: !_passwordVisible,
                   autofocus: false,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.grey.shade300,
+                      ),
+                      onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
                     fillColor: Colors.grey.shade300,
                     prefixIconColor: Colors.grey.shade300,
                     suffixIconColor: Colors.grey.shade300,
@@ -116,20 +134,25 @@ class _PartnerSignInPage extends State<PartnerSignInPage> {
                     focusColor: Colors.grey.shade300,
                   ),
                 ),
-                BlocConsumer<SignInPartnerCubit, SignInPartnerState>(
+                BlocBuilder<SignInPartnerCubit, SignInPartnerState>(
                     bloc: signInPartnerCubit,
                     builder: (context, state) {
+                      if (state is SignInPartnerError) {
+                        return const Text(
+                          'Thông tin đăng nhập không hợp lệ',
+                          style: TextStyle(color: Colors.redAccent),
+                        );
+                      }
                       return const SizedBox();
-                    },
-                    listener: (context, state) {}),
-                const SizedBox(
-                  height: 16,
-                ),
+                    }),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          Navigator.pushNamed(
+                              context, AppRouteUser.resetPasswordPage);
+                        },
                         child: const Text(
                           'Quên mật khẩu?',
                           style: TextStyle(
@@ -138,6 +161,9 @@ class _PartnerSignInPage extends State<PartnerSignInPage> {
                               fontWeight: FontWeight.bold),
                         ))
                   ],
+                ),
+                const SizedBox(
+                  height: 16,
                 ),
                 SizedBox(
                   height: 60,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:partner_app/cubit/home/home_page/home_page_cubit.dart';
 
 class WelfarePartnerPage extends StatefulWidget {
   const WelfarePartnerPage({super.key});
@@ -8,6 +10,13 @@ class WelfarePartnerPage extends StatefulWidget {
 }
 
 class _WelfarePartnerPageState extends State<WelfarePartnerPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<HomePageCubit>(context).init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

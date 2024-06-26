@@ -458,127 +458,150 @@ class _CleanDetailPageDetailPageState extends State<CleanDetailPage> {
                         onPressed: () {
                           showModalBottomSheet<void>(
                             context: context,
+                            isScrollControlled: true,
                             builder: (BuildContext context) {
-                              return Container(
-                                padding: const EdgeInsets.all(16),
-                                height: 300,
-                                decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(16),
-                                        topRight: Radius.circular(16))),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: <Widget>[
-                                      const Text(
-                                        'Bạn muốn hủy công việc này?',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const Row(
-                                        children: [
-                                          Text(
-                                            'Lí do:',
-                                          ),
-                                        ],
-                                      ),
-                                      TextField(
-                                        controller: cleanDetailCubit
-                                            .cancelReasonContoller,
-                                        textInputAction: TextInputAction.done,
-                                        decoration: InputDecoration(
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                              borderSide: BorderSide(
-                                                  color: Colors.grey.shade300)),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.grey.shade300)),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.grey.shade300)),
-                                          hintText: 'Nhập lí do tại đây',
-                                        ),
-                                        maxLines: 4,
-                                      ),
-                                      Row(
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom),
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  height: 300,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(16),
+                                          topRight: Radius.circular(16))),
+                                  child: Center(
+                                    child: SingleChildScrollView(
+                                      child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.grey.shade200,
-                                                  // overlayColor: Colors.grey,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    'Hủy',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.green,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                )),
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: <Widget>[
+                                          const Text(
+                                            'Bạn muốn hủy công việc này?',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                          const SizedBox(
-                                            width: 20,
+                                          const Row(
+                                            children: [
+                                              Text(
+                                                'Lí do:',
+                                              ),
+                                            ],
                                           ),
-                                          Expanded(
-                                            child: ElevatedButton(
-                                                onPressed: () {
-                                                  homePageCubit.cancelCleanBooking(
-                                                      context: context,
-                                                      taskId: cleanDetailCubit
-                                                          .cleanModel!.id!,
-                                                      cleanModel:
-                                                          cleanDetailCubit
-                                                              .cleanModel!,
-                                                      cancelReason: cleanDetailCubit
-                                                          .cancelReasonContoller
-                                                          .text);
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.green,
-                                                  // overlayColor: Colors.grey,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                ),
-                                                child: const Center(
-                                                  child: Text(
-                                                    'Đồng ý',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                )),
+                                          TextField(
+                                            controller: cleanDetailCubit
+                                                .cancelReasonContoller,
+                                            textInputAction:
+                                                TextInputAction.done,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Colors.white,
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .grey.shade300)),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .grey.shade300)),
+                                              focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .grey.shade300)),
+                                              hintText: 'Nhập lí do tại đây',
+                                            ),
+                                            maxLines: 4,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.grey.shade200,
+                                                      // overlayColor: Colors.grey,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                    child: const Center(
+                                                      child: Text(
+                                                        'Hủy',
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.green,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    )),
+                                              ),
+                                              const SizedBox(
+                                                width: 20,
+                                              ),
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                    onPressed: () {
+                                                      homePageCubit.cancelCleanBooking(
+                                                          context: context,
+                                                          taskId:
+                                                              cleanDetailCubit
+                                                                  .cleanModel!
+                                                                  .id!,
+                                                          cleanModel:
+                                                              cleanDetailCubit
+                                                                  .cleanModel!,
+                                                          cancelReason:
+                                                              cleanDetailCubit
+                                                                  .cancelReasonContoller
+                                                                  .text);
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor:
+                                                          Colors.green,
+                                                      // overlayColor: Colors.grey,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                    ),
+                                                    child: const Center(
+                                                      child: Text(
+                                                        'Đồng ý',
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    )),
+                                              )
+                                            ],
                                           )
                                         ],
-                                      )
-                                    ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               );

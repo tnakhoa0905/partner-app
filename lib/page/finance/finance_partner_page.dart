@@ -100,7 +100,7 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
                             color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(12)),
                         child: const Icon(
-                          Icons.question_mark_rounded,
+                          Icons.settings,
                           color: Colors.white,
                           size: 24,
                         ),
@@ -160,7 +160,10 @@ class _FinancePartnerPage extends State<FinancePartnerPage>
                                       child: SizedBox(
                                         height: 40,
                                         child: ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.pushNamed(context,
+                                                  AppRouteUser.depositPage);
+                                            },
                                             style: ElevatedButton.styleFrom(
                                                 padding:
                                                     const EdgeInsets.all(0),

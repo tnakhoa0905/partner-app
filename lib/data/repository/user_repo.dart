@@ -6,7 +6,7 @@ import 'dart:convert';
 abstract class UserRepository {
   Future<UserModel?> userSignIn(
       String userName, String passWord, String fcmToken);
-  Future<UserModel?> userSignUp(
+  Future<Map<String, dynamic>?> userSignUp(
       {required String userName,
       required String passWord,
       required String email,
@@ -27,6 +27,12 @@ abstract class UserRepository {
     required String token,
     required double lat,
     required double lng,
+  });
+  Future<UserModel?> userSignInByPhone(String userName);
+  Future<bool> changePassword({
+    required String userId,
+    required String token,
+    required String password,
   });
 }
 
@@ -89,7 +95,7 @@ class UserRepositoryImplement extends UserRepository {
   }
 
   @override
-  Future<UserModel?> userSignUp(
+  Future<Map<String, dynamic>?> userSignUp(
       {required String userName,
       required String passWord,
       required String email,
@@ -109,9 +115,15 @@ class UserRepositoryImplement extends UserRepository {
           }));
       if (response.statusCode == 200) {
         print(UserModel.fromJson(jsonDecode(response.body)["data"]));
-        return UserModel.fromJson(jsonDecode(response.body)["data"]);
+        return {
+          "data": jsonDecode(response.body)["data"]["_id"],
+          "success": jsonDecode(response.body)["success"]
+        };
       }
-      return null;
+      return {
+        "data": jsonDecode(response.body)["data"],
+        "success": jsonDecode(response.body)["success"]
+      };
     } catch (e) {
       Exception(e);
     }
@@ -197,6 +209,59 @@ class UserRepositoryImplement extends UserRepository {
         return true;
       }
       return false;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<bool> changePassword({
+    required String userId,
+    required String token,
+    required String password,
+  }) async {
+    // TODO: implement changePassword
+    try {
+      print('go go');
+      print(userId);
+      final response = await http.post(Uri.parse(UrlApiAppUser.updateProfile),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({
+            "userInfo": {"password": password}
+          }));
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print('ccccc');
+        print(jsonDecode(response.body)["data"]);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  @override
+  Future<UserModel?> userSignInByPhone(String userName) async {
+    // TODO: implement userSignInByPhone
+    try {
+      print('go go');
+      final response = await http.post(
+          Uri.parse("${UrlApiAppUser.host}users/signin_by_phone"),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            "phoneNumber": userName,
+          }));
+      if (response.statusCode == 200) {
+        print(UserModel.fromJson(jsonDecode(response.body)["data"]));
+        return UserModel.fromJson(jsonDecode(response.body)["data"]);
+      }
+      return null;
     } catch (e) {
       throw Exception(e);
     }

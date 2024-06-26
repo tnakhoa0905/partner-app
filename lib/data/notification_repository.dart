@@ -16,6 +16,7 @@ class NotificationRepository {
         // await AppSharedPreferences.setDeviceToken(deviceToken);
         // pushDeviceToken();
       },
+      onMessage: (payload) {},
     );
   }
 

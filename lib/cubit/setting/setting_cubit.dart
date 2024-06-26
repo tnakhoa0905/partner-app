@@ -40,6 +40,9 @@ class SettingPageCubit extends Cubit<SettingPageState> {
   }
 
   initNew(BuildContext context) {
+    listCalendarNew = [];
+    taskNew = false;
+    cleanNew = false;
     emit(SettingPageLoaded());
   }
 

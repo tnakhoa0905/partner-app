@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:partner_app/components/back_ground.dart';
 import 'package:flutter/material.dart';
 import 'package:partner_app/cubit/sign_in/sign_in_cubit.dart';
+import 'package:partner_app/cubit/sign_up/sign_up_cubit.dart';
+import 'package:partner_app/cubit/sign_up/sign_up_state.dart';
 
 class PartnerSignUpPage extends StatefulWidget {
   const PartnerSignUpPage({super.key});
@@ -12,14 +14,14 @@ class PartnerSignUpPage extends StatefulWidget {
 }
 
 class _PartnerSignUpPage extends State<PartnerSignUpPage> {
-  late SignInPartnerCubit signInPartnerCubit;
-
+  late SignUpCubit signUpCubit;
+  bool _passwordVisible = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    signInPartnerCubit = BlocProvider.of<SignInPartnerCubit>(context);
-    BlocProvider.of<SignInPartnerCubit>(context).initSignUp(context);
+    signUpCubit = BlocProvider.of<SignUpCubit>(context);
+    BlocProvider.of<SignUpCubit>(context).init();
   }
 
   @override
@@ -106,7 +108,7 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
                         height: 8,
                       ),
                       TextField(
-                        controller: signInPartnerCubit.fullNameController,
+                        controller: signUpCubit.fullNameController,
                         style: const TextStyle(color: Colors.black),
                         cursorColor: Colors.grey.shade300,
                         decoration: InputDecoration(
@@ -139,7 +141,7 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
                         height: 8,
                       ),
                       TextField(
-                        controller: signInPartnerCubit.phoneNumberController,
+                        controller: signUpCubit.phoneNumberController,
                         style: const TextStyle(color: Colors.black),
                         cursorColor: Colors.grey.shade300,
                         decoration: InputDecoration(
@@ -172,7 +174,7 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
                         height: 8,
                       ),
                       TextField(
-                        controller: signInPartnerCubit.emailController,
+                        controller: signUpCubit.emailController,
                         style: const TextStyle(color: Colors.black),
                         cursorColor: Colors.grey.shade300,
                         decoration: InputDecoration(
@@ -205,10 +207,26 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
                         height: 8,
                       ),
                       TextField(
-                        controller: signInPartnerCubit.passwordController,
+                        controller: signUpCubit.passwordController,
                         style: const TextStyle(color: Colors.black),
+                        obscureText: !_passwordVisible,
                         cursorColor: Colors.grey.shade300,
                         decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.grey.shade300,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
                           fillColor: Colors.grey.shade300,
                           prefixIconColor: Colors.grey.shade300,
                           suffixIconColor: Colors.grey.shade300,
@@ -229,12 +247,26 @@ class _PartnerSignUpPage extends State<PartnerSignUpPage> {
                       const SizedBox(
                         height: 24,
                       ),
+                      BlocBuilder<SignUpCubit, SignUpState>(
+                          bloc: signUpCubit,
+                          builder: (context, state) {
+                            if (state is SignUpError) {
+                              return Text(
+                                state.error!,
+                                style: const TextStyle(color: Colors.redAccent),
+                              );
+                            }
+                            return const SizedBox();
+                          }),
+                      const SizedBox(
+                        height: 24,
+                      ),
                       SizedBox(
                         height: 60,
                         width: MediaQuery.sizeOf(context).width,
                         child: ElevatedButton(
                             onPressed: () {
-                              signInPartnerCubit.signUp(context);
+                              signUpCubit.signUp(context);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF4151b1),

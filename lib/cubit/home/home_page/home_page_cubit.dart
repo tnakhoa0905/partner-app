@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:partner_app/constant/constant.dart';
 // import 'package:geolocator/geolocator.dart';
 import 'package:partner_app/cubit/home/home_page/home_page_state.dart';
 import 'package:partner_app/data/hive_service.dart';
@@ -91,6 +92,13 @@ class HomePageCubit extends Cubit<HomePageState> {
     }
   }
 
+  getUser() async {
+    String idUser = (await _hiveService.getBox("id", 'userModel'))!;
+    String token = (await _hiveService.getBox("token", 'userModel'))!;
+    usermodel = await userRepository.getUser(idUser, token);
+    emit(HomePageLoaded());
+  }
+
   void getCurrentGeolocator() async {
     String idUser = (await _hiveService.getBox("id", 'userModel'))!;
     String token = (await _hiveService.getBox("token", 'userModel'))!;
@@ -162,7 +170,7 @@ class HomePageCubit extends Cubit<HomePageState> {
     String userId,
   ) async {
     socket = IO.io(
-        'https://apitasks.pdteam.net/',
+        UrlApiAppUser.host,
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .setQuery(
@@ -195,6 +203,7 @@ class HomePageCubit extends Cubit<HomePageState> {
         taskerId, taskBookingModel.id!, token);
     print("in complete task $result");
     if (result) {
+      print("*****************complete task***********************");
       socket.emit('partner_done_task', {
         "userId": taskBookingModel.userId!,
         "note": "Taker donetask",
@@ -222,13 +231,14 @@ class HomePageCubit extends Cubit<HomePageState> {
         token: token,
         cancelReason: cancelReason);
     if (result) {
+      print("*****************cancel task***********************");
+
       socket.emit('partner_cancel_task', {
         "note": "Taker donetask",
         "type": "taskBooking",
         "_id": taskBookingModel.id,
         "userId": taskBookingModel.userId
       });
-
       Navigator.pushNamedAndRemoveUntil(
           context, AppRouteUser.homePartner, (Route<dynamic> route) => false);
     } else {
@@ -246,6 +256,8 @@ class HomePageCubit extends Cubit<HomePageState> {
     bool result =
         await cleanTaskRepository.completeTask(taskerId, cleanModel.id!, token);
     if (result) {
+      print("*****************complete clean***********************");
+
       socket.emit('partner_done_task', {
         "userId": cleanModel.userId!,
         "note": "Taker donetask",
@@ -273,6 +285,8 @@ class HomePageCubit extends Cubit<HomePageState> {
         token: token,
         cancelReason: cancelReason);
     if (result) {
+      print("*****************cancel task***********************");
+
       socket.emit('partner_cancel_task', {
         "note": "Taker donetask",
         "type": "cleanBooking",
